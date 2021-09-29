@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'pwa',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,23 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+PWA_APP_NAME = "ProcessSa"
+PWA_APP_DESCRIPTION = "WSA ProcessSa"
+PWA_APP_THEME_COLOR = "#3477f5"
+PWA_APP_BACKGROUND_COLOR = "#6699f7"
+
+PWA_APP_ICONS = [
+    {
+    "src":"/static/img/pokeball.png",
+    "sizes":"160x160"
+    }
+]
+PWA_APP_ICONS_APPLE = [
+    {
+    "src":"/static/img/pokeball.png",
+    "sizes":"160x160"
+    }
+]
+
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, "serviceworker.js")

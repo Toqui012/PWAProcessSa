@@ -28,7 +28,10 @@ The above copyright notice and this permission notice shall be included in all c
   <!-- CSS Files -->
   <link href="{% static '../static/css/material-dashboard.css' %}" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="{% static '../static/demo/demo.css' %%}" rel="stylesheet" />
+  <link href="{% static '../static/demo/demo.css' %}" rel="stylesheet" />
+
+  {% load pwa %}
+  {% progressive_web_app_meta %}
 </head>
 
 <body class="">
