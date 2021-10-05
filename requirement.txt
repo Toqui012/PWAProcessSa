@@ -1,0 +1,15 @@
+asgiref==3.4.1
+certifi==2021.5.30
+charset-normalizer==2.0.4
+Django==3.2.6
+django-pwa==1.0.10
+djangorestframework==3.12.4
+idna==3.2
+PyJWT==2.1.0
+pytz==2021.1
+requests==2.26.0
+sqlparse==0.4.1
+virtualenv==20.7.2
+virtualenv-clone==0.5.7
+virtualenvwrapper==4.8.4
+virtualenvwrapper-win==1.2.6

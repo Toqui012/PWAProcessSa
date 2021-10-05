@@ -4,5 +4,6 @@ from django.urls import include, path
 from . import views
 
 urlpatterns = [
-    path('', views.LoginView, name='LoginView')
+    path('', views.login, name='login'),
+    path('validate',views.validate, name='validate'),
 ]
