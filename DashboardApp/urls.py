@@ -1,8 +1,10 @@
 from django.conf.urls import url
 from django.contrib import admin
 from django.urls import include, path
-from . import views
+from DashboardApp.views import DashboardMain
+from LoginApp.views import logout
 
 urlpatterns = [
-    path('', views.DashboardMain, name='DashboardMain')
+    path('', DashboardMain, name='DashboardMain'),
+    path('logout/', logout, name='logout'),
 ]

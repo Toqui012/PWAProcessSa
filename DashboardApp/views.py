@@ -8,13 +8,6 @@ from LoginApp.views import authenticated, decodered
 
 def DashboardMain(request):
     if authenticated(request):
-        token = request.COOKIES.get('validate')
-        data = decodered(token)
-        context = {
-                'menu' : 'DashboardMain',
-                'email' : data['email'],
-                'name': data['unique_name'],
-                'login' : datetime.fromtimestamp(data['nbf'])
-        }
-        return render(request, 'dashboard.html',{'datos': context})
-    
+        return render(request, 'dashboard.html')
+    else:
+        return redirect('login')

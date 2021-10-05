@@ -1,3 +1,4 @@
+from PWAProcessSa.settings import SECRET
 from django.http import response
 from typing import Any
 from django.http.request import HttpRequest
@@ -20,17 +21,16 @@ def decodered(data):
 
 #Función está autenticado
 def authenticated(request):
-    #validate corresponde a la cookie
     if request.COOKIES.get('validate'):
         return True
     else: 
         return False
 
 #Crea la cookie
-def setCookie(tokenApi):
+def setCookie(tokenAPI):
     obj = redirect('DashboardMain')
     # Aquí abajo está creando la cookie => Le asigna el nombre validate
-    obj.set_cookie('validate', tokenApi, expires=43200)
+    obj.set_cookie('validate', tokenAPI, expires=43200)
     return obj
 
 # Función valida datos => Se pasa al web service para que los valide
@@ -39,14 +39,13 @@ def validate(request):
     password = request.POST.get('password')
     payload = json.dumps({'email': email, 'password': password})
     headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Accept': '*/*', 'email': email, 'password': password}
-    r = requests.post('https://localhost:32482/api/login/addlogin/', headers=headers, data=payload)
+    r = requests.post('http://localhost:32482/api/login/addlogin/', headers=headers, data=payload)
     if r.ok:
         tokenAPI = r.json()
-        # Generando una cookie con la respuesta que entrega el web service => r en este caso, la respuesta de ese post lo asigna a la variable tokenAPI
         obj = setCookie(tokenAPI['data']['token'])
-
+        
         return obj
-    else: 
+    else:
         return redirect('login')
 
 # Función login
@@ -56,11 +55,11 @@ def login(request):
 def logout(request):
     if authenticated(request):
         token = request.COOKIES.get('validate')
-        rep = redirect('DashboardMain')
+        rep = redirect('login')
         rep.delete_cookie('validate') #elimina el valor de la cookie
         return rep
     else: 
-        return redirect('DashboardMain')
+        return redirect('login')
 
 
 
