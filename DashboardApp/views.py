@@ -37,3 +37,30 @@ def UserSection(request):
         return render(request, 'list_user.html', {'data': context})
     else:
         return redirect('login')
+
+def AddUserSection(request):
+    if authenticated(request):
+        # Consumo de API: Rol
+        # Method: GET
+        token = request.COOKIES.get('validate')
+        headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
+        resRole = requests.get('http://localhost:32482/api/rol', headers=headers)
+        dataRole = resRole.json()
+        listRole = dataRole['data']
+
+        #Consumo de API: Unidad Interna
+        # Method: GET
+        resUnidad = requests.get('http://localhost:32482/api/unidadInterna', headers=headers)
+        dataUnidad = resUnidad.json()
+        listUnidad = dataUnidad['data']
+
+
+        # Variables con data a enviar a la vista
+        context = {
+            'role': listRole,
+            'unidadInterna': listUnidad
+        }
+        #Return Section
+        return render(request, 'user.html',{'data':context})
+    else:
+        return redirect('login')

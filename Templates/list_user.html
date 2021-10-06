@@ -33,6 +33,9 @@
                         <th>
                           Cargo
                         </th>
+                        <th>
+                          Acciones
+                        </th>
                       </thead>
                       <tbody>
                         {% for users in data.users %}
@@ -58,6 +61,11 @@
                               {% elif users.idRolUsuario == 21 %}
                                   Desarrollador 
                               {% endif %}
+                            </td>
+                            <td class="text-primary">
+                              <a href="{% url 'AddUserSection' %}"><i class="material-icons">group_add</i></a>
+                              <a href="#"><i class="material-icons">delete</i></a>
+                              <a href="#"><i class="material-icons">cached</i></a>
                             </td>
                           </tr>
                         {% endfor %}
