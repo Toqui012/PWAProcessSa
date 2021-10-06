@@ -1,9 +1,10 @@
+from json import dump
 from django.http.request import HttpHeaders
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template.context_processors import request
 from LoginApp.views import authenticated, decodered
-import requests
+import requests, jwt, json
 
 # Create your views here.
 
@@ -54,6 +55,52 @@ def AddUserSection(request):
         dataUnidad = resUnidad.json()
         listUnidad = dataUnidad['data']
 
+        #Consumo de API: Usuario
+        # Method: POST
+        rut = request.POST.get('rutUsuario')
+        firstName = request.POST.get('primerNombre')
+        secondName = request.POST.get('segundoNombre')
+        lastName = request.POST.get('apellidoUsuario')
+        secondLastName = request.POST.get('segundoApellido')
+        email = request.POST.get('correoElectronico')
+        numberPhone = request.POST.get('numTelefono')
+        roleUser = request.POST.get('selectRolUsuario')
+        internalDrive = request.POST.get('selectUnidadInterna')
+        password = request.POST.get('password')
+
+
+        payload = json.dumps({'rut': rut, 
+                              'nombreUsuario': firstName, 
+                              'segundoNombre': secondName,
+                              'apellidoUsuario': lastName,
+                              'segundoApellido': secondLastName,
+                              'numTelefono':numberPhone,
+                              'correoElectronico': email,
+                              'password': password,
+                              'idRolUsuario': roleUser,
+                              'idUnidadInternaUsuario': internalDrive,
+        })
+
+        headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Accept': '*/*', 
+                    'rut': rut, 'nombreUsuario': firstName, 
+                    'segundoNombre': secondName,
+                    'apellidoUsuario': lastName,
+                    'segundoApellido': secondLastName,
+                    'numTelefono':numberPhone,
+                    'correoElectronico': email,
+                    'password': password,
+                    'idRolUsuario': roleUser,
+                    'idUnidadInternaUsuario': internalDrive,
+        }
+
+        # Validate API
+        status = False
+
+        r = requests.post('http://localhost:32482/api/usuario/add', headers=headers, data=payload)
+        if r.ok:
+            status = True
+
+        print(status)
 
         # Variables con data a enviar a la vista
         context = {
