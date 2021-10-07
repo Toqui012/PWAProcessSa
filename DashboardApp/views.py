@@ -1,5 +1,5 @@
 from json import dump
-# from django.http.request import HttpRequest
+from django.http.request import HttpRequest
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template.context_processors import request
@@ -67,9 +67,41 @@ def AddUserSection(request):
         roleUser = request.POST.get('selectRolUsuario')
         internalDrive = request.POST.get('selectUnidadInterna')
         password = request.POST.get('password')
+        
+        status = ''
+        if rut == '' or firstName == '' or secondName == '' or lastName == '' or secondLastName == '' or email == '' or numberPhone == '' or numberPhone == None or roleUser == '' or internalDrive == '' or password == '':
+            status = 'ERROR'
+        elif rut != '' or firstName != '' or secondName != '' or lastName != '' or secondLastName != '' or email != '' or numberPhone != '' or roleUser != '' or internalDrive != '' or password != '':
+            status = 'OK'
+        else:
+            status
 
-        #Configuración de los parametros para ejecutar la petición
+        if  status == 'OK':
+            AddUser(request,rut,firstName,secondName,lastName,secondLastName,email,numberPhone,roleUser,internalDrive,password)
+
+        # Variables con data a enviar a la vista
+        context = {
+            'role': listRole,
+            'unidadInterna': listUnidad,
+            'statusCreation': status,
+        }
+        #Return Section
+        return render(request, 'user.html',{'data':context})
+    else:
+        return redirect('login')
+
+
+
+# Metodos Complementarios
+#-------------------------------------------
+# Crud: User
+
+# METHOD: POST
+def AddUser(request,rut, firstName, secondName, lastName, secondLastName, email, numberPhone, roleUser, internalDrive, password):
+    if authenticated:
+        token = request.COOKIES.get('validate')
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
+
 
         # Datos a enviar a la petición POST
         payload = json.dumps({'rutUsuario': rut, 
@@ -83,19 +115,27 @@ def AddUserSection(request):
                               'idRolUsuario': int(roleUser),
                               'idUnidadInternaUsuario': int(internalDrive),
         })
-
-        # Section: Validate API
-        status = False
         r = requests.post('http://localhost:32482/api/usuario/add', headers=headers, data=payload)
-        if r.ok:
-            status = True
 
-        # Variables con data a enviar a la vista
-        context = {
-            'role': listRole,
-            'unidadInterna': listUnidad
-        }
-        #Return Section
-        return render(request, 'user.html',{'data':context})
+def DeleteUser(request, idUser):
+    if authenticated:
+        status = 'NO_CONTENT'
+        token = request.COOKIES.get('validate')
+        headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
+
+        # Datos a enviar a la petición DELETE
+        payload = json.dumps({'rutUsuario': idUser})
+        r = requests.delete('http://localhost:32482/api/usuario/delete/'+idUser, headers=headers, data=payload)
+        if r.ok:
+            status = 'DELETED'
     else:
         return redirect('login')
+        
+
+
+
+
+
+
+
+
