@@ -1,5 +1,5 @@
 from json import dump
-from django.http.request import HttpHeaders
+# from django.http.request import HttpRequest
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template.context_processors import request
@@ -68,39 +68,27 @@ def AddUserSection(request):
         internalDrive = request.POST.get('selectUnidadInterna')
         password = request.POST.get('password')
 
+        #Configuración de los parametros para ejecutar la petición
+        headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
 
-        payload = json.dumps({'rut': rut, 
+        # Datos a enviar a la petición POST
+        payload = json.dumps({'rutUsuario': rut, 
                               'nombreUsuario': firstName, 
                               'segundoNombre': secondName,
                               'apellidoUsuario': lastName,
                               'segundoApellido': secondLastName,
-                              'numTelefono':numberPhone,
+                              'numTelefono': int(numberPhone),
                               'correoElectronico': email,
                               'password': password,
-                              'idRolUsuario': roleUser,
-                              'idUnidadInternaUsuario': internalDrive,
+                              'idRolUsuario': int(roleUser),
+                              'idUnidadInternaUsuario': int(internalDrive),
         })
 
-        headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Accept': '*/*', 
-                    'rut': rut, 'nombreUsuario': firstName, 
-                    'segundoNombre': secondName,
-                    'apellidoUsuario': lastName,
-                    'segundoApellido': secondLastName,
-                    'numTelefono':numberPhone,
-                    'correoElectronico': email,
-                    'password': password,
-                    'idRolUsuario': roleUser,
-                    'idUnidadInternaUsuario': internalDrive,
-        }
-
-        # Validate API
+        # Section: Validate API
         status = False
-
         r = requests.post('http://localhost:32482/api/usuario/add', headers=headers, data=payload)
         if r.ok:
             status = True
-
-        print(status)
 
         # Variables con data a enviar a la vista
         context = {
