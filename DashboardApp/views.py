@@ -68,6 +68,7 @@ def AddUserSection(request):
         internalDrive = request.POST.get('selectUnidadInterna')
         password = request.POST.get('password')
         
+        
         status = ''
         if rut == '' or firstName == '' or secondName == '' or lastName == '' or secondLastName == '' or email == '' or numberPhone == '' or numberPhone == None or roleUser == '' or internalDrive == '' or password == '':
             status = 'ERROR'
@@ -90,6 +91,36 @@ def AddUserSection(request):
     else:
         return redirect('login')
 
+def DeleteUserSection(request, idUser):
+    if authenticated:
+        status = 'NO_CONTENT'
+        token = request.COOKIES.get('validate')
+        headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
+        
+        # Consumo de API: Usuario
+        # Method: GET
+        reqUser = requests.get('http//localhost:32482/api/usuario', headers=headers)
+        dataAPI = reqUser.json()
+        listUser = dataAPI['data']
+
+        # Consumo de API: Usuario
+        # Method: DELETE
+        payload = json.dumps({'rutUsuario': idUser})
+        r = requests.delete('http://localhost:32482/api/usuario/delete/'+idUser, headers=headers, data=payload)
+
+        context = {
+            'listUser':listUser,
+            'deteleStatus':status,
+        }
+
+        if r.ok:
+            status = 'DELETED'
+            return render(request, 'list_user.html', {'data': context})
+        else:
+            status = 'ERROR'
+            return render(request, 'list_user.html', {'data':context})
+    else:
+        return redirect('login')
 
 
 # Metodos Complementarios
@@ -117,19 +148,7 @@ def AddUser(request,rut, firstName, secondName, lastName, secondLastName, email,
         })
         r = requests.post('http://localhost:32482/api/usuario/add', headers=headers, data=payload)
 
-def DeleteUser(request, idUser):
-    if authenticated:
-        status = 'NO_CONTENT'
-        token = request.COOKIES.get('validate')
-        headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
 
-        # Datos a enviar a la petición DELETE
-        payload = json.dumps({'rutUsuario': idUser})
-        r = requests.delete('http://localhost:32482/api/usuario/delete/'+idUser, headers=headers, data=payload)
-        if r.ok:
-            status = 'DELETED'
-    else:
-        return redirect('login')
         
 
 
