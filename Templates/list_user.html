@@ -60,7 +60,13 @@
                                   Administrador
                               {% elif users.idRolUsuario == 21 %}
                                   Desarrollador 
+                              {% elif users.idRolUsuario == 23 %}
+                                  WEA2
+                              {% elif users.idRolUsuario == 41 %}
+                                  Secretario
                               {% endif %}
+
+                              {{users.idRolUsuario}}
                             </td>
                             <td class="text-primary">
                               <a href="{% url 'AddUserSection' %}"><i class="material-icons">group_add</i></a>
