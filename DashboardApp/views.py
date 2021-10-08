@@ -10,7 +10,6 @@ import requests, jwt, json
 
 def DashboardMain(request):
     if authenticated(request):
-
         #Variables con data a enviar a la vista
         context = {
         }
@@ -68,7 +67,7 @@ def AddUserSection(request):
         internalDrive = request.POST.get('selectUnidadInterna')
         password = request.POST.get('password')
         
-        
+        # Optimizar más con try catch
         status = ''
         if rut == '' or firstName == '' or secondName == '' or lastName == '' or secondLastName == '' or email == '' or numberPhone == '' or numberPhone == None or roleUser == '' or internalDrive == '' or password == '':
             status = 'ERROR'
@@ -98,26 +97,28 @@ def DeleteUserSection(request, idUser):
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
         
         # Consumo de API: Usuario
-        # Method: GET
-        reqUser = requests.get('http//localhost:32482/api/usuario', headers=headers)
-        dataAPI = reqUser.json()
-        listUser = dataAPI['data']
-
-        # Consumo de API: Usuario
         # Method: DELETE
         payload = json.dumps({'rutUsuario': idUser})
         r = requests.delete('http://localhost:32482/api/usuario/delete/'+idUser, headers=headers, data=payload)
 
+        # Consumo de API: Usuario
+        # Method: GET
+        reqUser = requests.get('http://localhost:32482/api/usuario', headers=headers)
+        dataAPI = reqUser.json()
+        listUser = dataAPI['data']
+
         context = {
-            'listUser':listUser,
+            'users': listUser,
             'deteleStatus':status,
         }
 
         if r.ok:
             status = 'DELETED'
-            return render(request, 'list_user.html', {'data': context})
+            print(status)
+            return redirect('UserSection')
         else:
             status = 'ERROR'
+            print(status)
             return render(request, 'list_user.html', {'data':context})
     else:
         return redirect('login')
