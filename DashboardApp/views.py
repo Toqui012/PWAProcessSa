@@ -99,3 +99,5 @@ def AddUserSection(request):
         return render(request, 'user.html',{'data':context})
     else:
         return redirect('login')
+
+

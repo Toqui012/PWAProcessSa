@@ -1213,3 +1213,9 @@ html[dir="rtl"] .card .card-body, html[dir="rtl"] .card .card-footer {
   }
 }
 /*# sourceMappingURL=material-dashboard-rtl.css.map */
+
+::-webkit-datetime-edit-year-field:not([aria-valuenow]),
+::-webkit-datetime-edit-month-field:not([aria-valuenow]),
+::-webkit-datetime-edit-day-field:not([aria-valuenow]) {
+    color: transparent;
+}
