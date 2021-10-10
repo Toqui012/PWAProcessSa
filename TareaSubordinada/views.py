@@ -62,6 +62,39 @@ def AddTareaSubordinadaSection(request):
     else:
         return redirect('login')
 
+def DeleteTareaSubordinadaSection(request, idTareaSub):
+    if authenticated:
+        status = 'NO_CONTENT'
+        token = request.COOKIES.get('validate')
+        headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
+
+        # Consumo de API: Tarea Subordinada
+        # Method: DELETE
+        payload = json.dumps({'idTareaSubordinada': idTareaSub})
+        r = requests.delete('http://localhost:32482/api/TareaSubordinada/delete/'+str(idTareaSub), headers=headers, data=payload)
+
+        # Consumo de API: Tarea Subordinada
+        # Method: GET
+        reqTareaSubordinada = requests.get('http://localhost:32482/api/TareaSubordinada', headers=headers)
+        dataAPI = reqTareaSubordinada.json()
+        listTareaSubordinada = dataAPI['data']
+
+        context = {
+            'tareaSubordinada': listTareaSubordinada,
+            'deleteStatus': status
+        }
+
+        if r.ok:
+            status = 'DELETED'
+            print(status)
+            return redirect('TareaSubordinadaSection')
+        else: 
+            status = 'ERROR',
+            print(status)
+            return render(request, 'Tarea_Subordinada/list_tarea_subordinada.html', {'data': context})
+        
+    else:
+        return redirect('login')
 
 
 # Métodos Complementarios
