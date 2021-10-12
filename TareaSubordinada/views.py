@@ -3,6 +3,7 @@ from django.http.request import HttpRequest
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template.context_processors import request
+from requests.api import head
 from LoginApp.views import authenticated, decodered
 import requests, jwt, json
 
@@ -70,8 +71,10 @@ def DeleteTareaSubordinadaSection(request, idTareaSub):
 
         # Consumo de API: Tarea Subordinada
         # Method: DELETE
-        payload = json.dumps({'idTareaSubordinada': idTareaSub})
-        r = requests.delete('http://localhost:32482/api/TareaSubordinada/delete/'+str(idTareaSub), headers=headers, data=payload)
+        tareaSub = str(idTareaSub)
+        payload = json.dumps({'idTareaSubordinada': tareaSub})
+        r = requests.delete('http://localhost:32482/api/TareaSubordinada/delete/' + tareaSub, headers=headers, data=payload)
+        print(r)
 
         # Consumo de API: Tarea Subordinada
         # Method: GET
@@ -96,6 +99,28 @@ def DeleteTareaSubordinadaSection(request, idTareaSub):
     else:
         return redirect('login')
 
+def UpdateTareaSubordinadaSection(request, idTareaSub):
+    if authenticated(request):
+        token = request.COOKIES.get('validate')
+        data = decodered(token)
+        headers={'Content-Type':'application/json', 'Authorization': 'Bearer '+token}       
+        tareasSubordinadas = requests.get('http://localhost:32482/api/TareaSubordinada/', headers=headers).json()
+        for i in tareasSubordinadas['data']:
+            if i['idTareaSubordinada'] == idTareaSub: 
+                diccionarioTareasSub = i
+
+
+        context = {
+            'diccionarioTareasSub' : diccionarioTareasSub
+        }
+
+        return render(request, 'Tarea_Subordinada/list_tarea_subordinada.html', {'data': context})
+
+    else: 
+        return redirect('login')
+
+
+
 
 # Métodos Complementarios
 # --------------------------------------------
@@ -113,3 +138,26 @@ def AddTareaSubordinada(request, nombre, descripcion, tareaFk):
                               'fkIdTarea': int(tareaFk),
         })
         r = requests.post('http://localhost:32482/api/TareaSubordinada/add', headers=headers, data=payload)
+
+# METHOD: PUT
+def UpdateTareaSubordinada(request, idTareaSub):
+    if authenticated:
+        token = request.COOKIES.get('validate')
+        data = decodered(token)
+        headers={'Content-Type':'application/json', 'Authorization': 'Bearer '+token}
+        tareaSub = str(idTareaSub)
+
+        payload = json.dumps({
+            'nombreSubordinada': request.POST.get('nombreTareaSubordinada'),
+            'descripcionSubordinada': request.POST.get('descripcionTareaSubordinada')
+        })
+
+        update = request.put('http://localhost:32482/api/TareaSubordinada/delete/' + tareaSub, headers=headers, data = payload)
+
+        if update.ok:
+            return redirect('tareaSubordinadaSection')
+        else: 
+            return redirect('DashboardMain')
+    else:
+        return redirect('login')
+

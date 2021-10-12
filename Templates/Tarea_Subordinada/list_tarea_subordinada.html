@@ -39,8 +39,8 @@
                             </td>
                             <td class="text-primary">
                               <a href="{% url 'AddTareaSubordinadaSection' %}"><i class="material-icons">group_add</i></a>
-                              <a href="#" onclick="confirmOption('eliminar', '{{tareaSubordinadas.idTareaSubordinada}}')" ><i class="material-icons">delete</i></a>        
-                              <a href="#"><i class="material-icons">cached</i></a>
+                              <a href="#" onclick="confirmOption('eliminar', 'deleteTareaSubordinadaSection/{{tareaSubordinada.idTareaSubordinada}}')" ><i class="material-icons">delete</i></a>        
+                              <a href="{% url 'UpdateTareaSubordinadaSection' idTareaSub=tareasSubordinadas.idTareaSubordinada %}"><i class="material-icons">cached</i></a>
                             </td>
                           </tr>
                         {% endfor %}
