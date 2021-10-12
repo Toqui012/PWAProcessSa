@@ -123,6 +123,74 @@ def DeleteUserSection(request, idUser):
     else:
         return redirect('login')
 
+def EditUserSection(request, idUser):
+    if authenticated:
+
+        # Configuración Header
+        status = 'NO_CONTENT'
+        token = request.COOKIES.get('validate')
+        headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
+
+        # Consumo de API: Rol
+        # Method: GET
+        resRole = requests.get('http://localhost:32482/api/rol', headers=headers)
+        dataRole = resRole.json()
+        listRole = dataRole['data']
+
+
+        # Consumo de API: Unidad Interna
+        # Method: GET
+        resUnidad = requests.get('http://localhost:32482/api/unidadInterna', headers=headers)
+        dataUnidad = resUnidad.json()
+        listUnidad = dataUnidad['data']
+
+        # Consumo de API: OneUser
+        # Method: GET with Params
+        resOneUser = requests.get('http://localhost:32482/api/usuario/oneUser/'+ idUser, headers=headers)
+        dataOneUser = resOneUser.json()
+        OneUser = dataOneUser['data']
+
+        # Fillings in Fields
+        # for x in OneUser:
+            
+
+        # Validate Data Extraction
+        # if request.method == 'POST':
+        #     try:
+        #         # Recuperación de data proveniente del HTML
+        #         rut = request.POST.get('rutUsuario')
+        #         firstName = request.POST.get('primerNombre')
+        #         secondName = request.POST.get('segundoNombre')
+        #         lastName = request.POST.get('apellidoUsuario')
+        #         secondLastName = request.POST.get('segundoApellido')
+        #         email = request.POST.get('correoElectronico')
+        #         numberPhone = request.POST.get('numTelefono')
+        #         roleUser = request.POST.get('selectRolUsuario')
+        #         internalDrive = request.POST.get('selectUnidadInterna')
+        #         password = request.POST.get('password')
+        #         status = 'OK'
+        #     except:
+        #         status = 'ERROR'
+
+        # Metodo Update User
+        # try:
+        #     if status == 'OK':
+        #      EditUser(request,rut,firstName,secondName,lastName,secondLastName,email,numberPhone,roleUser,internalDrive,password)
+        # except:
+        #     status = 'ERROR'
+        
+        context = {
+            'role': listRole,
+            'unidadInterna': listUnidad,
+            'statusUpdate': status,
+            'oneUser': OneUser,
+        }
+
+        # Return Section
+        return render(request, 'user_edit.html', {'data':context})
+    else:
+        return redirect('login')
+
 
 # Metodos Complementarios
 #-------------------------------------------
@@ -148,6 +216,30 @@ def AddUser(request,rut, firstName, secondName, lastName, secondLastName, email,
                               'idUnidadInternaUsuario': int(internalDrive),
         })
         r = requests.post('http://localhost:32482/api/usuario/add', headers=headers, data=payload)
+
+def EditUser(request,rut, firstName, secondName, lastName, secondLastName, email, numberPhone, roleUser, internalDrive, password):
+    if authenticated:
+        token = request.COOKIES.get('validate')
+        headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
+
+
+        # Datos a enviar a la petición PUT
+        payload = json.dumps({
+            'rutUsuario': rut,
+            'nombreUsuario': firstName,
+            'segundoNombre': secondName,
+            'apellidoUsuario': lastName,
+            'segundoApellido': secondLastName,
+            'numTelefono': int(numberPhone),
+            'correoElectronico': email,
+            'password': password,
+            'idRolUsuario': int(roleUser),
+            'idUnidadInternaUsuario': int(internalDrive)
+        })
+        r = requests.put('http://localhost:32482/api/usuario/update'+rut, headers=headers, data=payload)
+
+
+
 
 
         
