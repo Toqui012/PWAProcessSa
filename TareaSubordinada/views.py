@@ -99,24 +99,64 @@ def DeleteTareaSubordinadaSection(request, idTareaSub):
     else:
         return redirect('login')
 
-def UpdateTareaSubordinadaSection(request, idTareaSub):
-    if authenticated(request):
+
+def EditTareaSubordinadaSection(request, idTareaSub):
+    if authenticated:
+
+        # Configuración Header
+        status = 'NO_CONTENT'
         token = request.COOKIES.get('validate')
-        data = decodered(token)
-        headers={'Content-Type':'application/json', 'Authorization': 'Bearer '+token}       
-        tareasSubordinadas = requests.get('http://localhost:32482/api/TareaSubordinada/', headers=headers).json()
-        for i in tareasSubordinadas['data']:
-            if i['idTareaSubordinada'] == idTareaSub: 
-                diccionarioTareasSub = i
+        headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
 
+        # Consumo de API: Tarea
+        # Method: GET
+        resTarea = requests.get('http://localhost:32482/api/tarea', headers=headers)
+        dataTarea = resTarea.json()
+        listTarea = dataTarea['data']
 
+        # Consumo de API: OneTareaSubordinada
+        # Method: GET with Params
+        tareaSub = str(idTareaSub)
+        resOneTareaSub = requests.get('http://localhost:32482/api/TareaSubordinada/oneTareaSubordinada/'+ tareaSub, headers=headers)
+        dataTareaSub = resOneTareaSub.json()
+        OneTareaSubordinada = dataTareaSub['data']
+
+        # Asignación del ID de Tarea Subordinada a Buscar
+        idTareaSubordinadaToSearch = ''
+        for x in OneTareaSubordinada:
+            idTareaSubordinadaToSearch = x['idTareaSubordinada']
+           # print(idTareaSubordinadaToSearch)
+
+        # Validate Data Extraction
+        if request.method == 'POST':
+            try:
+                #Recuperación de data proveniente del HTML
+                nombre = request.POST.get('nombreTareaSubordinada')
+                descripcion = request.POST.get('descripcionTareaSubordinada')
+                tareaFk = request.POST.get('selectTarea')
+                status = 'OK'
+                #print(nombre, descripcion, tareaFk)
+            except:
+                status = 'ERROR'
+
+        # Método Update User
+        try:
+            if status == 'OK':
+                EditTareaSubordinada(request, nombre, descripcion, tareaFk, idTareaSubordinadaToSearch)
+            
+        except:
+            status = 'ERROR'
+        
         context = {
-            'diccionarioTareasSub' : diccionarioTareasSub
+            'tarea': listTarea,
+            'statusUpdate': status,
+            'oneTareaSubordinada': OneTareaSubordinada,
         }
 
-        return render(request, 'Tarea_Subordinada/list_tarea_subordinada.html', {'data': context})
+        # Return Section
+        return render(request, 'Tarea_Subordinada/updateTareaSubordinada.html', {'data':context})
 
-    else: 
+    else:
         return redirect('login')
 
 
@@ -140,24 +180,16 @@ def AddTareaSubordinada(request, nombre, descripcion, tareaFk):
         r = requests.post('http://localhost:32482/api/TareaSubordinada/add', headers=headers, data=payload)
 
 # METHOD: PUT
-def UpdateTareaSubordinada(request, idTareaSub):
+def EditTareaSubordinada(request, nombre, descripcion, tareaFk, idTareaSubordinadaToSearch):
     if authenticated:
         token = request.COOKIES.get('validate')
-        data = decodered(token)
-        headers={'Content-Type':'application/json', 'Authorization': 'Bearer '+token}
-        tareaSub = str(idTareaSub)
+        headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
 
-        payload = json.dumps({
-            'nombreSubordinada': request.POST.get('nombreTareaSubordinada'),
-            'descripcionSubordinada': request.POST.get('descripcionTareaSubordinada')
+
+        # Datos a enviar a la petición PUT
+        payload = json.dumps({'nombreSubordinada' : nombre,
+                              'descripcionSubordinada': descripcion,
+                              'fkIdTarea': int(tareaFk),
         })
-
-        update = request.put('http://localhost:32482/api/TareaSubordinada/delete/' + tareaSub, headers=headers, data = payload)
-
-        if update.ok:
-            return redirect('tareaSubordinadaSection')
-        else: 
-            return redirect('DashboardMain')
-    else:
-        return redirect('login')
-
+        r = requests.put('http://localhost:32482/api/TareaSubordinada/update/' + str(idTareaSubordinadaToSearch), headers=headers, data=payload)
+        

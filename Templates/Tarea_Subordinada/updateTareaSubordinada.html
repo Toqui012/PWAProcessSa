@@ -12,29 +12,31 @@
               <p class="card-category">Rellene los campos para editar una tarea subordinada dentro del sistema</p>
             </div>
             <div class="card-body">
-              <form method="PUT">
+              <form method="POST">
                 {% csrf_token %}
+                {% for x in data.oneTareaSubordinada %}
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label class="bmd-label-floating">Nombre Tarea Subordinada</label>
+                      <label class="bmd-label-floating">{{x.nombreSubordinada}}</label>
                       <input type="text" class="form-control" name="nombreTareaSubordinada">
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label class="bmd-label-floating">Descripción Tarea Subordinada</label>
+                      <label class="bmd-label-floating">{{x.descripcionSubordinada}}</label>
                       <input type="text" class="form-control" name="descripcionTareaSubordinada">
                     </div>
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label class="bmd-label-floating">Id Tarea</label>
+                      <label class="bmd-label-floating">{{x.fkIdTarea}}</label>
                       <input type="text" class="form-control" name="selectTarea">
                     </div>
                   </div>
                   <button type="submit" class="btn btn-primary pull-right">Editar Tarea Subordinada</button>
                 </div>
+                {% endfor %}
               </form>
             </div>
           </div>
