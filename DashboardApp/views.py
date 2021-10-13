@@ -149,35 +149,36 @@ def EditUserSection(request, idUser):
         resOneUser = requests.get('http://localhost:32482/api/usuario/oneUser/'+ idUser, headers=headers)
         dataOneUser = resOneUser.json()
         OneUser = dataOneUser['data']
+        
+        # Asignación del rut a buscar
+        rutUserToSearch = ''
+        for x in OneUser:
+            rutUserToSearch = x['rutUsuario']
 
-        # Fillings in Fields
-        # for x in OneUser:
-            
 
-        # Validate Data Extraction
-        # if request.method == 'POST':
-        #     try:
-        #         # Recuperación de data proveniente del HTML
-        #         rut = request.POST.get('rutUsuario')
-        #         firstName = request.POST.get('primerNombre')
-        #         secondName = request.POST.get('segundoNombre')
-        #         lastName = request.POST.get('apellidoUsuario')
-        #         secondLastName = request.POST.get('segundoApellido')
-        #         email = request.POST.get('correoElectronico')
-        #         numberPhone = request.POST.get('numTelefono')
-        #         roleUser = request.POST.get('selectRolUsuario')
-        #         internalDrive = request.POST.get('selectUnidadInterna')
-        #         password = request.POST.get('password')
-        #         status = 'OK'
-        #     except:
-        #         status = 'ERROR'
-
+        #Validate Data Extraction
+        if request.method == 'POST':
+            try:
+                # Recuperación de data proveniente del HTML
+                rut = request.POST.get('rutUsuario')
+                firstName = request.POST.get('primerNombre')
+                secondName = request.POST.get('segundoNombre')
+                lastName = request.POST.get('apellidoUsuario')
+                secondLastName = request.POST.get('segundoApellido')
+                email = request.POST.get('correoElectronico')
+                numberPhone = request.POST.get('numTelefono')
+                roleUser = request.POST.get('selectRolUsuario')
+                internalDrive = request.POST.get('selectUnidadInterna')
+                status = 'OK'
+            except:
+                status = 'ERROR'
+                
         # Metodo Update User
-        # try:
-        #     if status == 'OK':
-        #      EditUser(request,rut,firstName,secondName,lastName,secondLastName,email,numberPhone,roleUser,internalDrive,password)
-        # except:
-        #     status = 'ERROR'
+            try:
+             if status == 'OK':
+              EditUser(request,rut,firstName,secondName,lastName,secondLastName,email,numberPhone,roleUser,internalDrive, rutUserToSearch)
+            except:
+                status = 'ERROR'
         
         context = {
             'role': listRole,
@@ -217,7 +218,7 @@ def AddUser(request,rut, firstName, secondName, lastName, secondLastName, email,
         })
         r = requests.post('http://localhost:32482/api/usuario/add', headers=headers, data=payload)
 
-def EditUser(request,rut, firstName, secondName, lastName, secondLastName, email, numberPhone, roleUser, internalDrive, password):
+def EditUser(request,rut, firstName, secondName, lastName, secondLastName, email, numberPhone, roleUser, internalDrive, rutToSearch):
     if authenticated:
         token = request.COOKIES.get('validate')
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
@@ -232,11 +233,11 @@ def EditUser(request,rut, firstName, secondName, lastName, secondLastName, email
             'segundoApellido': secondLastName,
             'numTelefono': int(numberPhone),
             'correoElectronico': email,
-            'password': password,
             'idRolUsuario': int(roleUser),
             'idUnidadInternaUsuario': int(internalDrive)
         })
-        r = requests.put('http://localhost:32482/api/usuario/update'+rut, headers=headers, data=payload)
+        r = requests.put('http://localhost:32482/api/usuario/update/'+rutToSearch, headers=headers, data=payload)
+        print(r)
 
 
 
