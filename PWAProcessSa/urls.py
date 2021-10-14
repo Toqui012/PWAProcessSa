@@ -23,5 +23,6 @@ urlpatterns = [
     path('login/', include('LoginApp.urls')),
     path('dashboard/', include('DashboardApp.urls')),
     path('tareaSubordinada/', include('TareaSubordinada.urls')),
+    path('asignarTarea/', include('AsignarTareasApp.urls')),
     path('', include('LoginApp.urls'))
 ]
