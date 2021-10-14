@@ -11,24 +11,7 @@ import requests, jwt, json
 # Create your views here.
 
 
-def TareaSection(request):
-    if authenticated(request):
-        # Consumo de API: Usuario
-        # Method: GET
-        token = request.COOKIES.get('validate')
-        headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
-        req = requests.get('http://localhost:32482/api/tarea', headers=headers)
-        dataAPI = req.json()
-        listTarea = dataAPI['data']
 
-        #Variables con data a enviar a la vista
-        context = {
-            'tareas': listTarea
-        }
-        # Return Section
-        return render(request, 'list_tarea.html', {'data': context})
-    else:
-        return redirect('login')
 
 
 def AddTareaSection(request):
@@ -75,7 +58,7 @@ def AddTareaSection(request):
         justification = request.POST.get('selectJustificacion')
         taskState = request.POST.get('selectEstadoTarea')
         taskPriority = request.POST.get('selectPrioridad')
-        print(nombreTarea,description,dateDeadline,problem_report,assignment,responsible,justification,taskState,taskPriority)
+        #print(nombreTarea,description,dateDeadline,problem_report,assignment,responsible,justification,taskState,taskPriority)
         
         # Optimizar más con try catch
         status = ''
@@ -101,25 +84,110 @@ def AddTareaSection(request):
         return redirect('login')
 
 
-def AddTarea(request,nombreTarea,description,dateDeadline,problem_report,assignment,responsible,justification,taskState,taskPriority):
-    if authenticated:
+def TareaSection(request):
+    if authenticated(request):
+        # Consumo de API: Usuario
+        # Method: GET
+        token = request.COOKIES.get('validate')
+        headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
+        req = requests.get('http://localhost:32482/api/tarea', headers=headers)
+        dataAPI = req.json()
+        listTarea = dataAPI['data']
+
+        #Variables con data a enviar a la vista
+        context = {
+            'tareas': listTarea
+        }
+        # Return Section
+        return render(request, 'list_tarea.html', {'data': context})
+    else:
+        return redirect('login')
+
+
+def EditUserSection(request, idTarea):
+    if authenticated(request):
+        status = 'NO_CONTENT'
         token = request.COOKIES.get('validate')
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
 
 
-        # Datos a enviar a la petición POST
-        payload = json.dumps({
-                                'nombreTarea':nombreTarea,
-                                'descripcionTarea': description,
-                                'fechaPlazo': dateDeadline,
-                                'reporteProblema': problem_report,
-                                'asignacionTarea': assignment,
-                                'fkRutUsuario' : responsible,
-                                'fkIdJustificacion': int(justification),
-                                'fkEstadoTarea' : int(taskState),
-                                'fkPrioridadTarea' : int(taskPriority),
-        })
-        r = requests.post('http://localhost:32482/api/tarea/add', headers=headers, data=payload)
+        #consumo de api : usuarios
+        # Method: GET
+        resUser = requests.get('http://localhost:32482/api/usuario', headers=headers)
+        dataUser = resUser.json()
+        listUser = dataUser['data']
+
+        #consumo de api : prioridad tarea
+        # Method: GET
+        resPrioridad = requests.get('http://localhost:32482/api/prioridadTarea', headers=headers)
+        dataPrioridad = resPrioridad.json()
+        listPrioridad = dataPrioridad['data']
+
+        #consumo api: estado tarea
+        # Method: GET
+        resEstado = requests.get('http://localhost:32482/api/estadoTarea', headers=headers)
+        dataEstado = resEstado.json()
+        listEstado = dataEstado['data']
+        
+        #consumo api: Justificacion
+        # Method: GET
+        resJustificacion = requests.get('http://localhost:32482/api/justificacionTarea', headers=headers)
+        dataJustificacion = resJustificacion.json()
+        listJustificacion = dataJustificacion['data']
+
+        #consumo de API: OneTarea
+        # method: get with params
+        idTareaP=str(idTarea)
+        resOneTarea = requests.get('http://localhost:32482/api/tarea/oneTask/'+ idTareaP, headers=headers)
+        dataOneTarea = resOneTarea.json()
+        OneTarea = dataOneTarea['data']
+
+        # ASignacion del rut a buscar
+        tareaToSearch = ''
+        for x in OneTarea:
+            tareaToSearch = x['idTarea']
+
+        # validate data Extraction
+        if request.method == 'POST':
+            try:
+                nombreTarea = request.POST.get('nameTarea')
+                description = request.POST.get('descripcion')
+                dateDeadline = request.POST.get('fechaPlazo')
+                problem_report = request.POST.get('problemasReportados')
+                assignment = request.POST.get('asignacion')
+                responsible = request.POST.get('selectrutUsuario')
+                justification = request.POST.get('selectJustificacion')
+                taskState = request.POST.get('selectEstadoTarea')
+                taskPriority = request.POST.get('selectPrioridad')
+                status = 'OK'
+
+                print(dateDeadline)
+                    
+            except:
+                status = 'ERROR'
+        
+        
+            print(status)
+        # metodo update User
+            try:
+             if status == 'OK':
+              print(nombreTarea,description,dateDeadline,problem_report,assignment,responsible,justification,taskState,taskPriority)
+              EditTarea(request,nombreTarea,description,dateDeadline,problem_report,assignment,responsible,justification,taskState,taskPriority,tareaToSearch)
+            except:
+                status = 'ERROR'
+        #print(nombreTarea,description,dateDeadline,problem_report,assignment,responsible,justification,taskState,taskPriority)    
+        context = {
+            'usuario':listUser,
+            'prioridad':listPrioridad,
+            'estado':listEstado,
+            'justificacion':listJustificacion,
+            'oneTarea': OneTarea,
+        }
+
+        # return Section
+        return render(request, 'tarea_edit.html', {'data':context})
+    else:
+        return redirect('login')
 
     
 def DeleteTareaSection(request, idTarea):
@@ -152,3 +220,55 @@ def DeleteTareaSection(request, idTarea):
 
     else:
         return redirect('login')
+
+
+
+
+
+def AddTarea(request,nombreTarea,description,dateDeadline,problem_report,assignment,responsible,justification,taskState,taskPriority):
+    if authenticated:
+        token = request.COOKIES.get('validate')
+        headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
+
+
+        # Datos a enviar a la petición POST
+        payload = json.dumps({
+                                'nombreTarea':nombreTarea,
+                                'descripcionTarea': description,
+                                'fechaPlazo': dateDeadline,
+                                'reporteProblema': problem_report,
+                                'asignacionTarea': assignment,
+                                'fkRutUsuario' : responsible,
+                                'fkIdJustificacion': int(justification),
+                                'fkEstadoTarea' : int(taskState),
+                                'fkPrioridadTarea' : int(taskPriority),
+        })
+        r = requests.post('http://localhost:32482/api/tarea/add', headers=headers, data=payload)
+
+
+def EditTarea(request,nombreTarea,description,dateDeadline,problem_report,assignment,responsible,justification,taskState,taskPriority,tareaToSearch):
+    if authenticated:
+        token = request.COOKIES.get('validate')
+        headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
+
+        
+        payload = json.dumps({
+                                'idTarea':tareaToSearch,
+                                'nombreTarea':nombreTarea,
+                                'descripcionTarea': description,
+                                'fechaPlazo': dateDeadline,
+                                'reporteProblema': problem_report,
+                                'asignacionTarea': assignment,
+                                'fkRutUsuario' : responsible,
+                                'fkIdJustificacion': int(justification),
+                                'fkEstadoTarea' : int(taskState),
+                                'fkPrioridadTarea' : int(taskPriority),
+        })
+        tareaP=str(tareaToSearch)
+        r = requests.put('http://localhost:32482/api/tarea/update/'+tareaP, headers=headers, data=payload)
+        print(r)
+
+
+
+
+    
