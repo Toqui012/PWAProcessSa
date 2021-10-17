@@ -43,7 +43,7 @@ def AddTareaSubordinadaSection(request):
         status = ''
         if nombre == '' or descripcion == '' or tareaFk == '' or nombre == None:
             status = 'ERROR'
-        elif nombre != '' or descripcion == '' or tareaFk == '' or nombre != None:
+        elif nombre != '' or descripcion != '' or tareaFk != '' or nombre != None:
             status = 'OK'
         else: 
             status
@@ -92,7 +92,7 @@ def DeleteTareaSubordinadaSection(request, idTareaSub):
             print(status)
             return redirect('TareaSubordinadaSection')
         else: 
-            status = 'ERROR',
+            status = 'ERROR'
             print(status)
             return render(request, 'Tarea_Subordinada/list_tarea_subordinada.html', {'data': context})
         

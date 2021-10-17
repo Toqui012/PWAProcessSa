@@ -9,7 +9,7 @@
           <div class="card">
             <div class="card-header card-header-primary">
               <h4 class="card-title">Crear Tarea Subordinada</h4>
-              <p class="card-category">Rellene los campos para crear una tarea subordinada dentro del sistema</p>
+              <p class="card-category">Rellene los campos para crear una tarea subordinada dentro del sistema, puede buscar el Id de la Tarea en la sección de Listado de Tareas</p>
             </div>
             <div class="card-body">
               <form method="POST">
@@ -43,9 +43,64 @@
 
       <!--List Tareas-->
       <!-- Acá irán las tareas que existen-->
-
-
-
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Listado de Tareas</h4>
+                  <p class="card-category">Este es un listado de todas las tareas</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>
+                          Id
+                        </th>
+                        <th>
+                          Rut Encargado
+                        </th>
+                        <th>
+                          Nombre 
+                        </th>
+                        <th>
+                          Descripción
+                        </th>
+                        <th>
+                          Fecha Plazo
+                        </th>
+                      </thead>
+                      <tbody>
+                        {% for tarea in data.tarea %}
+                          <tr>
+                            <td>
+                              {{tarea.idTarea}}
+                            </td>
+                            <td>
+                              {{tarea.fkRutUsuario}}
+                            </td>
+                            <td>
+                              {{tarea.nombreTarea}}
+                            </td>
+                            <td>
+                              {{tarea.descripcionTarea}}
+                            </td>
+                            <td>
+                              {{tarea.fechaPlazo}}
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
