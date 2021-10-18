@@ -237,6 +237,7 @@ def EditUser(request,rut, firstName, secondName, lastName, secondLastName, email
             'idRolUsuario': int(roleUser),
             'idUnidadInternaUsuario': int(internalDrive)
         })
+        print(payload)
         r = requests.put('http://localhost:32482/api/usuario/update/'+rutToSearch, headers=headers, data=payload)
         print(r)
 

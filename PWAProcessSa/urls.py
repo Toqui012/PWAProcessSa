@@ -24,5 +24,6 @@ urlpatterns = [
     path('dashboard/', include('DashboardApp.urls')),
     path('tareaSubordinada/', include('TareaSubordinada.urls')),
     path('asignarTarea/', include('AsignarTareasApp.urls')),
-    path('', include('LoginApp.urls'))
+    path('', include('LoginApp.urls')),
+    path('mantenedor/tarea/',include('Tarea.urls'))
 ]
