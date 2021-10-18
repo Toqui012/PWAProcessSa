@@ -189,6 +189,7 @@ def EditUserSection(request, idUser):
 
         # Return Section
         return render(request, 'user_edit.html', {'data':context})
+        # return redirect('UserSection')
     else:
         return redirect('login')
 
