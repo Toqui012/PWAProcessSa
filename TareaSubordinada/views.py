@@ -35,6 +35,18 @@ def AddTareaSubordinadaSection(request):
         dataTarea = resTarea.json()
         listTarea = dataTarea['data']
 
+        # Consumo de API: Prioridad Tarea
+        # Method: GET
+        resPrioridad = requests.get('http://localhost:32482/api/prioridadTarea', headers=headers)
+        dataPrioridad = resPrioridad.json()
+        listPrioridad = dataPrioridad['data']
+
+        # Consumo de API: Estado Tarea
+        # Method: GET
+        resEstado = requests.get('http://localhost:32482/api/estadoTarea', headers=headers)
+        dataEstado = resEstado.json()
+        listEstado = dataEstado['data']
+
         # Consumo de API: Tarea Subordinada
         nombre = request.POST.get('nombreTareaSubordinada')
         descripcion = request.POST.get('descripcionTareaSubordinada')
@@ -56,6 +68,8 @@ def AddTareaSubordinadaSection(request):
         # Variables con data para enviar a la vista
         context = {
             'tarea': listTarea,
+            'prioridad': listPrioridad,
+            'estado': listEstado,
             'statusCreation': status,
         }
 
