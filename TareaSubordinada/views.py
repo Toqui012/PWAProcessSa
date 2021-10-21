@@ -35,25 +35,41 @@ def AddTareaSubordinadaSection(request):
         dataTarea = resTarea.json()
         listTarea = dataTarea['data']
 
+        # Consumo de API: Prioridad Tarea
+        # Method: GET
+        resPrioridad = requests.get('http://localhost:32482/api/prioridadTarea', headers=headers)
+        dataPrioridad = resPrioridad.json()
+        listPrioridad = dataPrioridad['data']
+
+        # Consumo de API: Estado Tarea
+        # Method: GET
+        resEstado = requests.get('http://localhost:32482/api/estadoTarea', headers=headers)
+        dataEstado = resEstado.json()
+        listEstado = dataEstado['data']
+
         # Consumo de API: Tarea Subordinada
         nombre = request.POST.get('nombreTareaSubordinada')
         descripcion = request.POST.get('descripcionTareaSubordinada')
+        prioridadFk = request.POST.get('selectPrioridadTarea')
+        estadoFk = request.POST.get('selectEstadoTarea')
         tareaFk = request.POST.get('selectTarea')
 
         status = ''
-        if nombre == '' or descripcion == '' or tareaFk == '' or nombre == None:
+        if nombre == '' or descripcion == '' or prioridadFk == '' or estadoFk == '' or tareaFk == '' or nombre == None:
             status = 'ERROR'
-        elif nombre != '' or descripcion != '' or tareaFk != '' or nombre != None:
+        elif nombre != '' or descripcion != '' or prioridadFk != '' or estadoFk != '' or tareaFk != '' or nombre != None:
             status = 'OK'
         else: 
             status
         
         if status == 'OK':
-             AddTareaSubordinada(request,nombre,descripcion,tareaFk)
+             AddTareaSubordinada(request,nombre,descripcion,prioridadFk,estadoFk,tareaFk)
 
         # Variables con data para enviar a la vista
         context = {
             'tarea': listTarea,
+            'prioridad': listPrioridad,
+            'estado': listEstado,
             'statusCreation': status,
         }
 
@@ -133,6 +149,8 @@ def EditTareaSubordinadaSection(request, idTareaSub):
                 #Recuperación de data proveniente del HTML
                 nombre = request.POST.get('nombreTareaSubordinada')
                 descripcion = request.POST.get('descripcionTareaSubordinada')
+                prioridadFk = request.POST.get('selectPrioridadTarea')
+                estadoFk = request.POST.get('selectEstadoTarea')
                 tareaFk = request.POST.get('selectTarea')
                 status = 'OK'
                 #print(nombre, descripcion, tareaFk)
@@ -142,7 +160,7 @@ def EditTareaSubordinadaSection(request, idTareaSub):
         # Método Update User
         try:
             if status == 'OK':
-                EditTareaSubordinada(request, nombre, descripcion, tareaFk, idTareaSubordinadaToSearch)
+                EditTareaSubordinada(request, nombre, descripcion, prioridadFk, estadoFk, tareaFk, idTareaSubordinadaToSearch)
             
         except:
             status = 'ERROR'
@@ -167,7 +185,7 @@ def EditTareaSubordinadaSection(request, idTareaSub):
 # CRUD: Tarea Subordinada
 
 # METHOD: POST
-def AddTareaSubordinada(request, nombre, descripcion, tareaFk):
+def AddTareaSubordinada(request, nombre, descripcion, prioridadFk, estadoFk, tareaFk):
     if authenticated:
         token = request.COOKIES.get('validate')
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+token, 'Accept': '*/*' }
@@ -175,12 +193,14 @@ def AddTareaSubordinada(request, nombre, descripcion, tareaFk):
         # Datos a enviar a la petición POST
         payload = json.dumps({'nombreSubordinada' : nombre,
                               'descripcionSubordinada': descripcion,
+                              'fkPrioridadTarea': int(prioridadFk),
+                              'fkEstadoTarea': int(estadoFk),
                               'fkIdTarea': int(tareaFk),
         })
         r = requests.post('http://localhost:32482/api/TareaSubordinada/add', headers=headers, data=payload)
 
 # METHOD: PUT
-def EditTareaSubordinada(request, nombre, descripcion, tareaFk, idTareaSubordinadaToSearch):
+def EditTareaSubordinada(request, nombre, descripcion, prioridadFk, estadoFk, tareaFk, idTareaSubordinadaToSearch):
     if authenticated:
         token = request.COOKIES.get('validate')
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
@@ -189,6 +209,8 @@ def EditTareaSubordinada(request, nombre, descripcion, tareaFk, idTareaSubordina
         # Datos a enviar a la petición PUT
         payload = json.dumps({'nombreSubordinada' : nombre,
                               'descripcionSubordinada': descripcion,
+                              'fkPrioridadTarea': int(prioridadFk),
+                              'fkEstadoTarea': int(estadoFk),
                               'fkIdTarea': int(tareaFk),
         })
         r = requests.put('http://localhost:32482/api/TareaSubordinada/update/' + str(idTareaSubordinadaToSearch), headers=headers, data=payload)
