@@ -5,11 +5,11 @@
   <div class="content">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-6">
           <div class="card">
             <div class="card-header card-header-primary">
               <h4 class="card-title">Crear Tarea Subordinada</h4>
-              <p class="card-category">Rellene los campos para crear una tarea subordinada dentro del sistema, puede buscar el Id de la Tarea en la sección de Listado de Tareas</p>
+              <p class="card-category">Rellene los campos para crear una tarea subordinada dentro del sistema</p>
             </div>
             <div class="card-body">
               <form method="POST">
@@ -29,28 +29,45 @@
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
+                      <label class="bmd-label-floating"> Id Prioridad Tarea</label>
+                      <input type="text" class="form-control" name="selectPrioridadTarea">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="bmd-label-floating"> Id Estado Tarea</label>
+                      <input type="text" class="form-control" name="selectEstadoTarea">
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
                       <label class="bmd-label-floating">Id Tarea</label>
                       <input type="text" class="form-control" name="selectTarea">
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-primary pull-right">Crear Tarea Subordinada</button>
+                  <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Crear Tarea Subordinada</button>
+                  </div>
                 </div>
               </form>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
 
       <!--List Tareas-->
       <!-- Acá irán las tareas que existen-->
       <div class="content">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Listado de Tareas</h4>
-                  <p class="card-category">Este es un listado de todas las tareas</p>
+                  <p class="card-category">Este es un listado de todas las tareas que existen en el sistema</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -63,13 +80,13 @@
                           Rut Encargado
                         </th>
                         <th>
-                          Nombre 
+                          Nombre Tarea
                         </th>
                         <th>
-                          Descripción
+                          Descripción Tarea
                         </th>
                         <th>
-                          Fecha Plazo
+                          Fecha Plazo 
                         </th>
                       </thead>
                       <tbody>
@@ -101,8 +118,92 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
+
+      <!--List Prioridad Tarea-->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Listado de Prioridades de Tarea</h4>
+                  <p class="card-category">Este es un listado de todas las prioridades de las tareas que existen en el sistema</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>
+                          Id
+                        </th>
+                        <th>
+                          Descripción Prioridad Tarea
+                        </th>
+
+                      </thead>
+                      <tbody>
+                        {% for prioridad in data.prioridad %}
+                          <tr>
+                            <td>
+                              {{prioridad.idPrioridad}}
+                            </td>
+                            <td>
+                              {{prioridad.descripcion}}
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--List Estado Tarea-->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Listado de Estados de Tarea</h4>
+                  <p class="card-category">Este es un listado de todos los estados de las tareas que existen en el sistema</p>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>
+                          Id
+                        </th>
+                        <th>
+                          Descripción Estado Tarea
+                        </th>
+
+                      </thead>
+                      <tbody>
+                        {% for estado in data.estado %}
+                          <tr>
+                            <td>
+                              {{estado.idEstadoTarea}}
+                            </td>
+                            <td>
+                              {{estado.descripcionEstadoTarea}}
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
   <script>
     $(document).ready(function() {
