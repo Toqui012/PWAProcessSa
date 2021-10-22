@@ -38,9 +38,10 @@
                         </th>
                       </thead>
                       <tbody>
+                        {% csrf_token %}
                         {% for users in data.users %}
                           <tr>
-                            <td>
+                            <td id="txtUserRut" name="txtUserRut">
                               {{users.rutUsuario}}
                             </td>
                             <td>
@@ -67,7 +68,8 @@
                               {{users.idRolUsuario}}
                             </td>
                             <td class="text-primary">
-                                <button type="submit" class="btn btn-primary">Asignar</button>
+                                {% comment %} <button type="submit" class="btn btn-primary">Asignar</button> {% endcomment %}
+                                <a href="{% url 'AssignTaskProcedure' idTask=data.idTask rutUser=users.rutUsuario %}" class="btn btn-success">Asignar</a>
                             </td>
                           </tr>
                         {% endfor %}

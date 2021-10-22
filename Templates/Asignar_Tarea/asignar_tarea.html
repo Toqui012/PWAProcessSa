@@ -32,24 +32,27 @@
                         </th> 
                       </thead>
                       <tbody>
-                        <tr>
-                            <!--Estos td van de ejmplo para ver como quedan los botones sin data-->
+                        {% for task in data.task %}
+                          <tr>
+                              <!--Estos td van de ejmplo para ver como quedan los botones sin data-->
+                              <td class="text-primary">
+                                {{task.idTarea}}
+                              </td>
+                              <td class="text-primary">
+                                {{task.nombreTarea}}
+                              </td>
+                              <td class="text-primary">
+                                {{task.descripcionTarea}}
+                              </td>
+                              <td class="text-primary">
+                                {{task.fechaPlazo}}
+                              </td>
                             <td class="text-primary">
-                              1
+                              <a href="{% url 'AsignarTareaUsuarioSection' idTask=task.idTarea %}" class="btn btn-success">Asignar Tarea</a>
+                              {% comment %} <a href="{% url 'UpdateUserSection' idUser=users.rutUsuario %}"><i class="material-icons">cached</i></a> {% endcomment %}
                             </td>
-                            <td class="text-primary">
-                              Tarea 1
-                            </td>
-                            <td class="text-primary">
-                              Descripción Tarea 1
-                            </td>
-                            <td class="text-primary">
-                              01-01-2022
-                            </td>
-                          <td class="text-primary">
-                            <a href="{% url 'AsignarTareaUsuarioSection' %}" class="btn btn-success">Asignar Tarea</a>
-                          </td>
-                        </tr>
+                          </tr>
+                        {% endfor %}
                       </tbody>
                     </table>
                   </div>
