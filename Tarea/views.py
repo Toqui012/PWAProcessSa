@@ -52,24 +52,19 @@ def AddTareaSection(request):
         nombreTarea = request.POST.get('nameTarea')
         description = request.POST.get('descripcion')
         dateDeadline = request.POST.get('fechaPlazo')
-        problem_report = request.POST.get('problemasReportados')
-        assignment = request.POST.get('asignacion')
-        responsible = request.POST.get('selectrutUsuario')
-        justification = request.POST.get('selectJustificacion')
-        taskState = request.POST.get('selectEstadoTarea')
         taskPriority = request.POST.get('selectPrioridad')
         #print(nombreTarea,description,dateDeadline,problem_report,assignment,responsible,justification,taskState,taskPriority)
         
         # Optimizar más con try catch
         status = ''
-        if nombreTarea == '' or description == '' or dateDeadline == '' or problem_report == '' or assignment == '' or responsible == '' or taskState == '' or taskPriority == '' or nombreTarea == None:
+        if nombreTarea == '' or description == '' or dateDeadline == '' or taskPriority == '' or nombreTarea == None:
             status = 'ERROR'
-        elif nombreTarea != '' or description != '' or dateDeadline != '' or problem_report != '' or assignment != '' or responsible != '' or taskState != '' or taskPriority != '' or nombreTarea != None:
+        elif nombreTarea != '' or description != '' or dateDeadline != '' or taskPriority != '' or nombreTarea != None:
             status = 'OK'
         else:
             status
         if  status == 'OK':
-            AddTarea(request,nombreTarea,description,dateDeadline,problem_report,assignment,responsible,justification,taskState,taskPriority)
+            AddTarea(request,nombreTarea,description,dateDeadline,taskPriority)
 
         # Variables con data a enviar a la vista
         context = {
@@ -153,10 +148,7 @@ def EditUserSection(request, idTarea):
                 nombreTarea = request.POST.get('nameTarea')
                 description = request.POST.get('descripcion')
                 dateDeadline = request.POST.get('fechaPlazo')
-                problem_report = request.POST.get('problemasReportados')
-                assignment = request.POST.get('asignacion')
                 responsible = request.POST.get('selectrutUsuario')
-                justification = request.POST.get('selectJustificacion')
                 taskState = request.POST.get('selectEstadoTarea')
                 taskPriority = request.POST.get('selectPrioridad')
                 status = 'OK'
@@ -171,8 +163,7 @@ def EditUserSection(request, idTarea):
         # metodo update User
             try:
              if status == 'OK':
-              print(nombreTarea,description,dateDeadline,problem_report,assignment,responsible,justification,taskState,taskPriority)
-              EditTarea(request,nombreTarea,description,dateDeadline,problem_report,assignment,responsible,justification,taskState,taskPriority,tareaToSearch)
+              EditTarea(request,nombreTarea,description,dateDeadline,responsible,taskState,taskPriority,tareaToSearch)
             except:
                 status = 'ERROR'
         #print(nombreTarea,description,dateDeadline,problem_report,assignment,responsible,justification,taskState,taskPriority)    
@@ -225,7 +216,7 @@ def DeleteTareaSection(request, idTarea):
 
 
 
-def AddTarea(request,nombreTarea,description,dateDeadline,problem_report,assignment,responsible,justification,taskState,taskPriority):
+def AddTarea(request,nombreTarea,description,dateDeadline,taskPriority):
     if authenticated:
         token = request.COOKIES.get('validate')
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
@@ -236,17 +227,15 @@ def AddTarea(request,nombreTarea,description,dateDeadline,problem_report,assignm
                                 'nombreTarea':nombreTarea,
                                 'descripcionTarea': description,
                                 'fechaPlazo': dateDeadline,
-                                'reporteProblema': problem_report,
-                                'asignacionTarea': assignment,
-                                'fkRutUsuario' : responsible,
-                                'fkIdJustificacion': int(justification),
-                                'fkEstadoTarea' : int(taskState),
+                                'fkRutUsuario' : '0.000.000',
+                                'fkEstadoTarea' : 1,
                                 'fkPrioridadTarea' : int(taskPriority),
         })
         r = requests.post('http://localhost:32482/api/tarea/add', headers=headers, data=payload)
 
 
-def EditTarea(request,nombreTarea,description,dateDeadline,problem_report,assignment,responsible,justification,taskState,taskPriority,tareaToSearch):
+def EditTarea(request,nombreTarea,description,dateDeadline,responsible,taskState,taskPriority,tareaToSearch):
+
     if authenticated:
         token = request.COOKIES.get('validate')
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
@@ -257,10 +246,7 @@ def EditTarea(request,nombreTarea,description,dateDeadline,problem_report,assign
                                 'nombreTarea':nombreTarea,
                                 'descripcionTarea': description,
                                 'fechaPlazo': dateDeadline,
-                                'reporteProblema': problem_report,
-                                'asignacionTarea': assignment,
                                 'fkRutUsuario' : responsible,
-                                'fkIdJustificacion': int(justification),
                                 'fkEstadoTarea' : int(taskState),
                                 'fkPrioridadTarea' : int(taskPriority),
         })

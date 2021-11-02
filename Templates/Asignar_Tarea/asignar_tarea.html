@@ -28,6 +28,9 @@
                           Fecha Plazo
                         </th>
                         <th>
+                          Estado
+                        </th>
+                        <th>
                           Acciones
                         </th> 
                       </thead>
@@ -46,6 +49,20 @@
                               </td>
                               <td class="text-primary">
                                 {{task.fechaPlazo}}
+                              </td>
+                              <td class="text-primary">
+                                {% if task.fkEstadoTarea == 1 %}
+                                  Creada
+                                {% endif %}
+                                {% if task.fkEstadoTarea == 2 %}
+                                  Asignado
+                                {% endif %}
+                                {% if task.fkEstadoTarea == 3 %}
+                                  Aceptada
+                                {% endif %}
+                                {% if task.fkEstadoTarea == 4 %}
+                                  Rechazado
+                                {% endif %}
                               </td>
                             <td class="text-primary">
                               <a href="{% url 'AsignarTareaUsuarioSection' idTask=task.idTarea %}" class="btn btn-success">Asignar Tarea</a>
