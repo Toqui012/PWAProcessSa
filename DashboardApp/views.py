@@ -40,6 +40,7 @@ def UserSection(request):
 
 def AddUserSection(request):
     if authenticated(request):
+        status = 'NO_CONTENT'
         # Consumo de API: Rol
         # Method: GET
         token = request.COOKIES.get('validate')
@@ -54,30 +55,24 @@ def AddUserSection(request):
         dataUnidad = resUnidad.json()
         listUnidad = dataUnidad['data']
 
-        #Consumo de API: Usuario
-        # Method: POST
-        rut = request.POST.get('rutUsuario')
-        firstName = request.POST.get('primerNombre')
-        secondName = request.POST.get('segundoNombre')
-        lastName = request.POST.get('apellidoUsuario')
-        secondLastName = request.POST.get('segundoApellido')
-        email = request.POST.get('correoElectronico')
-        numberPhone = request.POST.get('numTelefono')
-        roleUser = request.POST.get('selectRolUsuario')
-        internalDrive = request.POST.get('selectUnidadInterna')
-        password = request.POST.get('password')
-        
-        # Optimizar más con try catch
-        status = ''
-        if rut == '' or firstName == '' or secondName == '' or lastName == '' or secondLastName == '' or email == '' or numberPhone == '' or numberPhone == None or roleUser == '' or internalDrive == '' or password == '':
-            status = 'ERROR'
-        elif rut != '' or firstName != '' or secondName != '' or lastName != '' or secondLastName != '' or email != '' or numberPhone != '' or roleUser != '' or internalDrive != '' or password != '':
-            status = 'OK'
-        else:
-            status
-
-        if  status == 'OK':
-            AddUser(request,rut,firstName,secondName,lastName,secondLastName,email,numberPhone,roleUser,internalDrive,password)
+        if request.method == 'POST':
+            #Consumo de API: Usuario
+            # Method: POST
+            try:
+                rut = request.POST.get('rutUsuario')
+                firstName = request.POST.get('primerNombre')
+                secondName = request.POST.get('segundoNombre')
+                lastName = request.POST.get('apellidoUsuario')
+                secondLastName = request.POST.get('segundoApellido')
+                email = request.POST.get('correoElectronico')
+                numberPhone = request.POST.get('numTelefono')
+                roleUser = request.POST.get('selectRolUsuario')
+                internalDrive = request.POST.get('selectUnidadInterna')
+                password = request.POST.get('password')
+                AddUser(request,rut,firstName,secondName,lastName,secondLastName,email,numberPhone,roleUser,internalDrive,password)
+                status = 'OK'
+            except:
+                status = 'ERROR'
 
         # Variables con data a enviar a la vista
         context = {

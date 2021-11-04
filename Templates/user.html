@@ -8,6 +8,16 @@
         <div class="col-md-8">
           <div class="card">
             <div class="card-header card-header-primary">
+              {% if data.statusCreation == 'OK'%}
+                <div class="alert alert-success" role="alert">
+                  El usuario se ha incorporado exitosamente!
+                </div>
+              {% elif data.statusCreation == 'ERROR'%}
+                <div class="alert alert-danger" role="alert">
+                  Ha ocurrido un error, verifique que todos los campos del formulario hayan sido rellenados o contacte a soporte
+                </div>
+                <br>
+              {% endif %}
               <h4 class="card-title">Crear Usuario</h4>
               <p class="card-category">Rellene los campos para crear un usuario dentro del sistema</p>
             </div>
