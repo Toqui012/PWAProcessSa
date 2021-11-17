@@ -16,12 +16,6 @@
                 {% csrf_token %}
                 {% for x in data.oneEmpresa %}
                   <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label class="bmd-label-floating">{{x.rutEmpresa}}</label>
-                        <input type="text" class="form-control" name="rutEmpresa">
-                      </div>
-                    </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label class="bmd-label-floating">{{x.razonSocial}}</label>

@@ -41,16 +41,6 @@
                   </div>
 
                   <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label class="bmd-label-floating">Usuario</label>
-                        <select class="form-control form-select" name="selectrutUsuario" id="selectrutUsuario">
-                          {% for users in data.usuario %}
-                            <option value="{{users.rutUsuario}}" {% if x.FkRutUsuario == users.rutUsuario %} selected {% endif %} name="rutUsuario">{{users.nombreUsuario}}</option>
-                          {% endfor %}
-                        </select>
-                      </div>
-                    </div>
 
                     <div class="col-md-6">
                       <div class="form-group">
@@ -94,7 +84,7 @@
                   </div>
 
                 {% endfor %}
-                <button type="submit" class="btn btn-primary pull-right">Editar Usuario</button>
+                <button type="submit" class="btn btn-primary pull-right">Editar Tarea</button>
                 <div class="clearfix"></div>
               </form>
             </div>

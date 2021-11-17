@@ -7,17 +7,14 @@ from django.http import HttpResponse
 from django.template.context_processors import request
 from LoginApp.views import authenticated, decodered
 import requests, jwt, json
+from datetime import date
+
 
 # Create your views here.
 
-
-
-
-
 def AddTareaSection(request):
     if authenticated(request):
-        # Consumo de API: Usuario
-        # Method: GET
+
         token = request.COOKIES.get('validate')
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         
@@ -45,8 +42,6 @@ def AddTareaSection(request):
         dataJustificacion = resJustificacion.json()
         listJustificacion = dataJustificacion['data']
 
-
-
         #consumo de API: Tarea
         # Method: POST
         nombreTarea = request.POST.get('nameTarea')
@@ -65,6 +60,8 @@ def AddTareaSection(request):
             status
         if  status == 'OK':
             AddTarea(request,nombreTarea,description,dateDeadline,taskPriority)
+
+        print(status)
 
         # Variables con data a enviar a la vista
         context = {
@@ -212,10 +209,6 @@ def DeleteTareaSection(request, idTarea):
     else:
         return redirect('login')
 
-
-
-
-
 def AddTarea(request,nombreTarea,description,dateDeadline,taskPriority):
     if authenticated:
         token = request.COOKIES.get('validate')
@@ -228,11 +221,14 @@ def AddTarea(request,nombreTarea,description,dateDeadline,taskPriority):
                                 'descripcionTarea': description,
                                 'fechaPlazo': dateDeadline,
                                 'fkRutUsuario' : '0.000.000',
+                                'porcentajeAvance': 5,
+                                'fechaCreacion': dateDeadline,
+                                'creadaPor': '0.000.000',
                                 'fkEstadoTarea' : 1,
                                 'fkPrioridadTarea' : int(taskPriority),
         })
-        r = requests.post('http://localhost:32482/api/tarea/add', headers=headers, data=payload)
 
+        r = requests.post('http://localhost:32482/api/tarea/add', headers=headers, data=payload)
 
 def EditTarea(request,nombreTarea,description,dateDeadline,responsible,taskState,taskPriority,tareaToSearch):
 
@@ -246,7 +242,10 @@ def EditTarea(request,nombreTarea,description,dateDeadline,responsible,taskState
                                 'nombreTarea':nombreTarea,
                                 'descripcionTarea': description,
                                 'fechaPlazo': dateDeadline,
-                                'fkRutUsuario' : responsible,
+                                'fkRutUsuario' : '0.000.000',
+                                'porcentajeAvance': 5,
+                                'fechaCreacion': dateDeadline,
+                                'creadoPor': '0.000.000',
                                 'fkEstadoTarea' : int(taskState),
                                 'fkPrioridadTarea' : int(taskPriority),
         })

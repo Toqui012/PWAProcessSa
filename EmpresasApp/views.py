@@ -36,7 +36,7 @@ def AddEmpresaSection(request):
         giro = request.POST.get('giroEmpresa')
         direccion = request.POST.get('direccionEmpresa')
         numeroTelefono = request.POST.get('numeroTelefonoEmpresa')
-        correoElectronico =request.POST.get('correoElectronicoEmpresa')
+        correoElectronico = request.POST.get('correoElectronicoEmpresa')
 
         status = ''
         if rut == '' or razonSocial == '' or giro == '' or direccion == '' or numeroTelefono == '' or correoElectronico == '' or razonSocial == None:
@@ -49,7 +49,7 @@ def AddEmpresaSection(request):
         if status == 'OK':
             AddEmpresa(request, rut, razonSocial, giro, direccion, numeroTelefono, correoElectronico)
 
-
+        print(status)
 
         # Variables con data para enviar a la vista
         context = {
@@ -167,6 +167,8 @@ def AddEmpresa(request, rut, razonSocial, giro, direccion, numeroTelefono, corre
                             })
 
         r = requests.post('http://localhost:32482/api/business/add', headers=headers, data=payload)
+
+        print (r)
 
 def EditEmpresa(request, rut, razonSocial, giro, direccion, numeroTelefono, correoElectronico, rutEmpresaToSearch):
     if authenticated:

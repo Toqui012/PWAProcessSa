@@ -23,35 +23,12 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label class="bmd-label-floating">Deadline</label>
+                      <label class="bmd-label-floating">Fecha Plazo</label>
                       <input type="date" class="form-control" name="fechaPlazo">
                     </div>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Usuario</label>
-                      <select class="form-control form-select" name="selectrutUsuario" id="selectrutUsuario">
-                        {% for users in data.user %}
-                          <option value="{{users.rutUsuario}}" name="rutUsuario">{{users.nombreUsuario}}</option>
-                        {% endfor %}
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Estado Tarea</label>
-                      <select disabled class="form-control form-select" name="selectEstadoTarea" id="selectEstadoTarea">
-                        {% for estado in data.estado %}
-                          {% if estado.idEstadoTarea == 1 %}
-                            <option value="{{estado.idEstadoTarea}}" name="estadoTarea">{{estado.descripcionEstadoTarea}}</option>
-                          {% endif %}
-                        {% endfor %}
-                      </select>
-                    </div>
-                  </div>
 
                   <div class="col-md-6">
                     <div class="form-group">
