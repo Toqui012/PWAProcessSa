@@ -34,7 +34,7 @@ def UserSection(request):
             'users': listUser
         }
         # Return Section
-        return render(request, 'list_user.html', {'data': context})
+        return render(request, 'User/list_user.html', {'data': context})
     else:
         return redirect('login')
 
@@ -81,7 +81,7 @@ def AddUserSection(request):
             'statusCreation': status,
         }
         #Return Section
-        return render(request, 'user.html',{'data':context})
+        return render(request, 'User/user.html',{'data':context})
     else:
         return redirect('login')
 
@@ -114,7 +114,7 @@ def DeleteUserSection(request, idUser):
         else:
             status = 'ERROR'
             print(status)
-            return render(request, 'list_user.html', {'data':context})
+            return render(request, 'User/list_user.html', {'data':context})
     else:
         return redirect('login')
 
@@ -183,7 +183,7 @@ def EditUserSection(request, idUser):
         }
 
         # Return Section
-        return render(request, 'user_edit.html', {'data':context})
+        return render(request, 'User/user_edit.html', {'data':context})
         # return redirect('UserSection')
     else:
         return redirect('login')

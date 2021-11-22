@@ -71,7 +71,7 @@ def AddTareaSection(request):
             'justificacion': listJustificacion
         }
         #Return Section
-        return render(request, 'add_tarea.html',{'data':context})
+        return render(request, 'Tareas/add_tarea.html',{'data':context})
     else:
         return redirect('login')
 
@@ -91,7 +91,7 @@ def TareaSection(request):
             'tareas': listTarea
         }
         # Return Section
-        return render(request, 'list_tarea.html', {'data': context})
+        return render(request, 'Tareas/list_tarea.html', {'data': context})
     else:
         return redirect('login')
 
@@ -173,7 +173,7 @@ def EditUserSection(request, idTarea):
         }
 
         # return Section
-        return render(request, 'tarea_edit.html', {'data':context})
+        return render(request, 'Tareas/tarea_edit.html', {'data':context})
     else:
         return redirect('login')
 
@@ -204,7 +204,7 @@ def DeleteTareaSection(request, idTarea):
         else:
             status = 'ERROR'
             print(status)
-            return render(request, 'list_tarea.html', {'data':context})
+            return render(request, 'Tareas/list_tarea.html', {'data':context})
 
     else:
         return redirect('login')
