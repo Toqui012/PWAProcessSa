@@ -26,5 +26,6 @@ urlpatterns = [
     path('asignarTarea/', include('AsignarTareasApp.urls')),
     path('', include('LoginApp.urls')),
     path('mantenedor/tarea/',include('Tarea.urls')),
-    path('empresa/', include('EmpresasApp.urls'))
+    path('empresa/', include('EmpresasApp.urls')),
+    path('unidadInterna/', include('UnidadInternaApp.urls')),
 ]
