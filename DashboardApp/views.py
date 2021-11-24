@@ -11,7 +11,39 @@ import requests, jwt, json
 def DashboardMain(request):
     if authenticated(request):
         #Variables con data a enviar a la vista
+        
+        
+        # Consumo de API: Tarea
+        # Method: GET
+        token = request.COOKIES.get('validate')
+        headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
+        
+        reqInProcess = requests.get('http://localhost:32482/api/tarea/getTaskInProcess', headers=headers)
+        dataAPIInProcess = reqInProcess.json()
+        listTaskInProcess = dataAPIInProcess['data']
+        
+        reqFinishTask = requests.get('http://localhost:32482/api/tarea/getFinishTask', headers=headers)
+        dataAPIFinish = reqFinishTask.json()
+        listTaskFinish = dataAPIFinish['data']
+        
+        reqRejectTask = requests.get('http://localhost:32482/api/tarea/getRejectTask', headers=headers)
+        dataAPIReject = reqRejectTask.json()
+        listTaskReject = dataAPIReject['data']
+        
+        reqTaskCreated = requests.get('http://localhost:32482/api/tarea/getTaskCreated', headers=headers)
+        dataAPICreated = reqTaskCreated.json()
+        listTaskCreated = dataAPICreated['data']
+        
+        reqTaskAssigned = requests.get('http://localhost:32482/api/tarea/getAssignedTask', headers=headers)
+        dataAPIAssigned = reqTaskAssigned.json()
+        listTaskAssigned = dataAPIAssigned['data']
+        
         context = {
+            'getTaskInProcess': listTaskInProcess,
+            'getTaskFinish': listTaskFinish,
+            'getRejectTask': listTaskReject,
+            'getTaskCreated': listTaskCreated,
+            'getAssignedTask': listTaskAssigned
         }
 
         # Return Section
