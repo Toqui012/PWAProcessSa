@@ -315,7 +315,7 @@ md = {
       dataDailySalesChart = {
         labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
         series: [
-          [12, 17, 7, 17, 23, 18, 38]
+          [10, 17, 7, 17, 23, 18, 38]
         ]
       };
 
@@ -370,10 +370,24 @@ md = {
 
       /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
 
+      let getTaskInProcess = parseInt(document.getElementById('taskInProcess').innerText);
+      let getTaskFinished = parseInt(document.getElementById('taskFinish').innerText);
+      let getRejectTask = parseInt(document.getElementById('rejectTask').innerText);
+      let getTaskCreated =  parseInt(document.getElementById('taskCreated').innerText);
+      let getAssignedTask = parseInt(document.getElementById('assignedTask').innerText);
+
+      const arrayValueTask = [getTaskInProcess, getTaskFinished, getRejectTask, getTaskCreated, getAssignedTask];
+      maxValue = -99
+      arrayValueTask.forEach(i => {
+        if (i > maxValue) {
+          maxValue = i;
+        }
+      });
+      
       var dataWebsiteViewsChart = {
-        labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
+        labels: ['Aceptada', 'Rechazada', 'Asignada', 'Finalizada', 'Creada'],
         series: [
-          [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
+          [getTaskInProcess, getRejectTask, getAssignedTask, getTaskFinished, getTaskCreated]
 
         ]
       };
@@ -382,7 +396,7 @@ md = {
           showGrid: false
         },
         low: 0,
-        high: 1000,
+        high: maxValue,
         chartPadding: {
           top: 0,
           right: 5,

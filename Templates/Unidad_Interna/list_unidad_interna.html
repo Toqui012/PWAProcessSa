@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}     
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Listado de Unidades Internas</h4>
+                  <p class="card-category">Este es un listado con todas las Unidades Internas dentro de la Empresa</p>
+                  <div class="card-content md-12 offset-md-10">
+                    <td class="text-primary">
+                      <a href="{% url 'AddUnidadInternaSection' %}"><button class="btn btn-success">Crear Unidad Interna</button></a>
+                    </td>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>
+                          Id
+                        </th>
+                        <th>
+                          Nombre Unidad Interna
+                        </th>
+                        <th>
+                          Descripción
+                        </th>
+                        <th>
+                          Rut Empresa Asociada
+                        </th>
+                      </thead>
+                      <tbody>
+                        {% for unidadInterna in data.unidadInterna %}
+                          <tr>
+                            <td>
+                              {{unidadInterna.idUnidadInterna}}
+                            </td>
+                            <td>
+                              {{unidadInterna.nombreUnidad}}
+                            </td>
+                            <td>
+                              {{unidadInterna.descripcionUnidad}}
+                            </td>
+                            <td>
+                                {{unidadInterna.fkRutEmpresa}}
+                              </td>
+                            <td class="text-primary">
+                              <a href="{% url 'AddUnidadInternaSection' %}"><i class="material-icons">group_add</i></a>
+                              <a href="#" onclick="confirmOption('eliminar', 'deleteUnidadInternaSection/{{unidadInterna.idUnidadInterna}}')"><i class="material-icons">delete</i></a>
+                              <a href="{% url 'EditUnidadInternaSection' idUnidadInterna=unidadInterna.idUnidadInterna %}"><i class="material-icons">cached</i></a>
+                            </td>
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+<script>
+  function confirmOption(opcion, direccion){
+    if(confirm("Esta Seguro que desea "+ opcion)){
+      window.location.href = direccion;
+    }
+  }
+</script>
+{% endblock %}

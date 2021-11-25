@@ -28,4 +28,5 @@ urlpatterns = [
     path('mantenedor/tarea/',include('Tarea.urls')),
     path('empresa/', include('EmpresasApp.urls')),
     path('PdfGenerator/',include('PdfGenerator.urls')),
+    path('unidadInterna/', include('UnidadInternaApp.urls')),
 ]
