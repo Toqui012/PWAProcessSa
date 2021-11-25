@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}  
+      <!--Empresas-->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-5">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Reporte de Empresas</h4>
+                  <p class="card-category">Seleccione el botón para descargar un reporte de las empresas creadas en el sistema</p>
+                  <div class="card-content md-12 offset-md-9">
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <a href="{% url 'ReporteEmpresa' %}"><button class="btn btn-success">Generar Reporte Empresas</button></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Empleados-->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-5">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Reporte de Empleados</h4>
+                  <p class="card-category">Seleccione el botón para descargar un reporte de los empleados creadas en el sistema</p>
+                  <div class="card-content md-12 offset-md-9">
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <a href="{% url 'ReporteEmpleado' %}"><button class="btn btn-success">Generar Reporte Empleados</button></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!--Tareas-->   
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-5">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Reporte de Tareas</h4>
+                  <p class="card-category">Seleccione el botón para descargar un reporte de las tareas creadas en el sistema</p>
+                  <div class="card-content md-12 offset-md-9">
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <a href="{% url 'pdf_generator' %}"><button class="btn btn-success">Generar Reporte Tareas</button></a>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Tareas Subordinadas-->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-5">
+              <div class="card">
+                <div class="card-header card-header-primary">
+                  <h4 class="card-title ">Reporte de Tareas Subordinadas</h4>
+                  <p class="card-category">Seleccione el botón para descargar un reporte de las tareas subordinadas creadas en el sistema</p>
+                  <div class="card-content md-12 offset-md-9">
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <a href="{% url 'ReporteTareaSubordinada' %}"><button class="btn btn-success">Generar Reporte Tareas Subordinadas</button></a>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+{% endblock %}

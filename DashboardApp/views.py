@@ -42,15 +42,26 @@ def DashboardMain(request):
         dataAPITaskList = reqTaskList.json()
         listTarea = dataAPITaskList['data']
         
-        valorPrueba = len(listTarea)
-        print(valorPrueba)
+        cantTask = len(listTarea)
+        cantTaskInProcess = (listTaskInProcess)
+        cantTaskFinish = (listTaskFinish)
+        cantTaskReject = (listTaskReject)
+        cantTaskCreated = (listTaskCreated)
+        cantTaskAssigned = (listTaskAssigned)
+        
         
         context = {
             'getTaskInProcess': listTaskInProcess,
             'getTaskFinish': listTaskFinish,
             'getRejectTask': listTaskReject,
             'getTaskCreated': listTaskCreated,
-            'getAssignedTask': listTaskAssigned
+            'getAssignedTask': listTaskAssigned,
+            'cantTask':cantTask,
+            'cantTaskInProcess':cantTaskInProcess,
+            'cantTaskFinish':cantTaskFinish,
+            'cantTaskReject':cantTaskReject,
+            'cantTaskCreated':cantTaskCreated,
+            'cantTaskAssigned':cantTaskAssigned
         }
 
         # Return Section

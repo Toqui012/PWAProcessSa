@@ -13,3 +13,4 @@ virtualenv==20.7.2
 virtualenv-clone==0.5.7
 virtualenvwrapper==4.8.4
 virtualenvwrapper-win==1.2.6
+xhtml2pdf==0.2.4
