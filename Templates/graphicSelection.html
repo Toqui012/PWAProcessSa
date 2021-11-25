@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<form method="POST"">
+    {% csrf_token %}
+    <div class="col-md-6">
+        <div class="form-group">
+          <label class="bmd-label-floating">Prioridad</label>
+          <select class="form-control form-select" name="grapichSelection" id="selectPrioridad">
+            <option value="tareas">Tareas</option>
+            <option value="usuario">Usuario</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary pull-right">Crear PDF</button>
+
+</form>
+
+
+{% endblock %}
