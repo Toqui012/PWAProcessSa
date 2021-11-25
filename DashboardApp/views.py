@@ -38,6 +38,13 @@ def DashboardMain(request):
         dataAPIAssigned = reqTaskAssigned.json()
         listTaskAssigned = dataAPIAssigned['data']
         
+        reqTaskList = requests.get('http://localhost:32482/api/tarea', headers=headers)
+        dataAPITaskList = reqTaskList.json()
+        listTarea = dataAPITaskList['data']
+        
+        valorPrueba = len(listTarea)
+        print(valorPrueba)
+        
         context = {
             'getTaskInProcess': listTaskInProcess,
             'getTaskFinish': listTaskFinish,
