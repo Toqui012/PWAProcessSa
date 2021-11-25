@@ -1,0 +1,27 @@
+{% extends 'PDF/base.html' %}
+{% load static %}
+
+{% block content %}
+<table class="default">
+  <tr>
+    <th>Rut Empleado</th>
+    <th>Nombres</th>
+    <th>Apellidos</th>
+    <th>Numero Telefono</th>
+    <th colspan="2">Correo Electronico</th>
+    <th>Rol</th>
+    <th>Unidad Interna</th>
+  </tr>
+  {% for usuario in empleados %}
+  <tr>
+    <td><p>{{usuario.rutUsuario}}</p></td>
+    <td><p>{{usuario.nombreUsuario}} {{usuario.segundoNombre}}</p></td>
+    <td><p>{{usuario.apellidoUsuario}} {{usuario.segundoApellido}}</p></td>
+    <td><p>{{usuario.numTelefono}}</p></td>
+    <td colspan="2"><p>{{usuario.correoElectronico}}</p></td>
+    <td><p>{{usuario.idRolUsuario}}</p></td>
+    <td><p>{{usuario.idUnidadInternaUsuario}}</p></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

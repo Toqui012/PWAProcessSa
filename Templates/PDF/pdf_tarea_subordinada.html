@@ -1,0 +1,32 @@
+{% extends 'PDF/base.html' %}
+{% load static %}
+
+{% block content %}
+<table class="default">
+  <tr>
+    <th>Nombre Tarea</th>
+    <th>Descripcion</th>
+    <th>Prioridad</th>
+    <th>Estado</th>
+    <th>Tarea</th>
+  </tr>
+  {%for tarea in tareasSubordinadas %}
+  <tr>
+    <td>
+      <p>{{tarea.nombreSubordinada}}</p>
+    </td>
+    <td>
+      <p>{{tarea.descripcionSubordinada}}</p>
+    </td>
+    <td>
+      <p>{{tarea.fkIdPrioridad}}</p>
+    </td>
+    <td>
+      <p>{{tarea.fkIdEstado}}</p>
+    </td>
+    <td>
+      <p>{{tarea.fkIdTarea}}</p>
+    </td>
+  {% endfor %}
+</table>
+{% endblock %}

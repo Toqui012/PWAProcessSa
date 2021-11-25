@@ -27,6 +27,6 @@ urlpatterns = [
     path('', include('LoginApp.urls')),
     path('mantenedor/tarea/',include('Tarea.urls')),
     path('empresa/', include('EmpresasApp.urls')),
-    path('PdfGenerator/',include('PdfGenerator.urls')),
     path('unidadInterna/', include('UnidadInternaApp.urls')),
+    path('reportesPDF/',include('PdfGenerator.urls')),
 ]

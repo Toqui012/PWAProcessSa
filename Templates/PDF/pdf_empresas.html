@@ -1,0 +1,25 @@
+{% extends 'PDF/base.html' %}
+{% load static %}
+
+{% block content %}
+<table class="default">
+  <tr>
+    <th>Rut Empresa</th>
+    <th>Razon Social</th>
+    <th>Giro</th>
+    <th>Direccion</th>
+    <th>Numero Telefono</th>
+    <th>Correo Electronico</th>
+  </tr>
+  {% for empresa in empresas %}
+  <tr>
+    <td><p>{{empresa.rutEmpresa}}</p></td>
+    <td><p>{{empresa.razonSocial}}</p></td>
+    <td><p>{{empresa.giroEmpresa}}</p></td>
+    <td><p>{{empresa.direccionEmpresa}}</p></td>
+    <td><p>{{empresa.numeroTelefono}}</p></td>
+    <td><p>{{empresa.correoElectronicoEmpresa}}</p></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<meta charset="UTF-8"/>
+<style>
+  @page {
+        size: letter portrait;
+        @frame content_frame {
+            left: 50pt;
+            width: 512pt;
+            top: 50pt;
+            height: 692pt;
+            /*-pdf-frame-border: 1;    for debugging the layout */
+        }
+  }
+  .default{
+    border: 1px black solid;
+  }
+  p{
+    text-align: center;
+  }
+  td, th{
+    height: 30px;
+    text-align: center;
+  }
+  h1{
+    text-align: center;
+  }
+  h1{
+    font-size: 30px;
+  }
+  h2{
+    text-align: left;
+    font-size: 20px;
+  }
+  header,tbody,tfoot{
+    padding:100px;
+  }
+  body{
+    margin: 0%;
+    padding: 0%;
+  }
+</style>
+
+</head>
+
+<body >
+    <header>
+        <h1>Informe de {{name}}</h1>
+    </header>
+    <tbody>
+        <h2>Lista de {{name}}</h2>
+        {% block content %}
+        {% endblock %}
+    </tbody>
+    <tfoot>
+        <h2>Tabla de control de Versiones</h2>
+        <table cellspacing="0" cellpadding="0" style="border:0.75pt solid #000000; -aw-border:0.5pt single; -aw-border-insideh:0.5pt single #000000; -aw-border-insidev:0.5pt single #000000; border-collapse:collapse">
+            <tr>
+              <td colspan="6" style="background-color:#9cc2e5;">
+                <p>Control de Versiones</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="width: 50px;"> 
+                <p>N°</p>
+              </td>
+              <td>
+                <p>Version</p>
+              </td>
+              <td>
+                <p>Fecha</p>
+              </td>
+              <td colspan="3">
+                <p>Description</p>
+              </td>
+            </tr>
+            {% for i in '1234'|make_list %}
+            <tr>
+              <td>
+                <p>{{ i }}</p>
+              </td>
+              <td>
+                <p>&nbsp;</p>
+              </td>
+              <td>
+                <p>&nbsp;</p>
+              </td>
+              <td colspan="3">
+                <p>&nbsp;</p>
+              </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </tfoot>
+
+  
+</body>
+
+</html>

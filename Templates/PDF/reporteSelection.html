@@ -8,10 +8,12 @@
     {% csrf_token %}
     <div class="col-md-6">
         <div class="form-group">
-          <label class="bmd-label-floating">Prioridad</label>
+          <label class="bmd-label-floating">Tipo de Informe</label>
           <select class="form-control form-select" name="grapichSelection" id="selectPrioridad">
             <option value="tareas">Tareas</option>
+            <option value="empresas">Empresas</option>
             <option value="usuario">Usuario</option>
+            <option value="tareaSubordinada">Tareas Subordinadas</option>
           </select>
         </div>
       </div>
