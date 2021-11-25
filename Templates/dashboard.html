@@ -12,7 +12,7 @@
                     <i class="material-icons">content_copy</i>
                   </div>
                   <p class="card-category">Tareas</p>
-                  <h3 class="card-title">+245
+                  <h3 class="card-title">{{ data.cantTask }}
                     <small>Total</small>
                   </h3>
                 </div>
@@ -31,7 +31,7 @@
                     <i class="material-icons">store</i>
                   </div>
                   <p class="card-category">Tareas Finalizadas</p>
-                  <h3 class="card-title">30</h3>
+                  <h3 class="card-title">{{data.cantTaskFinish}}</h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
@@ -46,8 +46,8 @@
                   <div class="card-icon">
                     <i class="material-icons">info_outline</i>
                   </div>
-                  <p class="card-category">Tareas Atrasadas</p>
-                  <h3 class="card-title">30</h3>
+                  <p class="card-category">Tareas Rechazadas</p>
+                  <h3 class="card-title">{{data.cantTaskReject}}</h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
@@ -62,8 +62,8 @@
                   <div class="card-icon">
                     <i class="fa fa-twitter"></i>
                   </div>
-                  <p class="card-category">Tareas Pendientes</p>
-                  <h3 class="card-title">+245</h3>
+                  <p class="card-category">Tareas en Desarrollo</p>
+                  <h3 class="card-title">{{data.cantTaskInProcess}}</h3>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
