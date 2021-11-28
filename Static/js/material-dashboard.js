@@ -373,10 +373,11 @@ md = {
       let getTaskInProcess = parseInt(document.getElementById('taskInProcess').innerText);
       let getTaskFinished = parseInt(document.getElementById('taskFinish').innerText);
       let getRejectTask = parseInt(document.getElementById('rejectTask').innerText);
-      let getTaskCreated =  parseInt(document.getElementById('taskCreated').innerText);
+      let getTaskOverdure =  parseInt(document.getElementById('taskOverdure').innerText);
       let getAssignedTask = parseInt(document.getElementById('assignedTask').innerText);
 
-      const arrayValueTask = [getTaskInProcess, getTaskFinished, getRejectTask, getTaskCreated, getAssignedTask];
+
+      const arrayValueTask = [getTaskInProcess, getTaskFinished, getRejectTask, getTaskOverdure, getAssignedTask];
       maxValue = -99
       arrayValueTask.forEach(i => {
         if (i > maxValue) {
@@ -385,9 +386,9 @@ md = {
       });
       
       var dataWebsiteViewsChart = {
-        labels: ['Aceptada', 'Rechazada', 'Asignada', 'Finalizada', 'Creada'],
+        labels: ['Aceptada', 'Rechazada', 'Asignada', 'Finalizada', 'Rechazada'],
         series: [
-          [getTaskInProcess, getRejectTask, getAssignedTask, getTaskFinished, getTaskCreated]
+          [getTaskInProcess, getRejectTask, getAssignedTask, getTaskFinished, getTaskOverdure]
 
         ]
       };
@@ -396,7 +397,7 @@ md = {
           showGrid: false
         },
         low: 0,
-        high: maxValue,
+        high: maxValue+1,
         chartPadding: {
           top: 0,
           right: 5,
