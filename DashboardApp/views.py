@@ -31,9 +31,9 @@ def DashboardMain(request):
         dataAPIReject = reqRejectTask.json()
         listTaskReject = dataAPIReject['data']
         
-        reqTaskCreated = requests.get('http://localhost:32482/api/tarea/getTaskCreated', headers=headers)
-        dataAPICreated = reqTaskCreated.json()
-        listTaskCreated = dataAPICreated['data']
+        reqTaskOverdure = requests.get('http://localhost:32482/api/tarea/getOverdureTask', headers=headers)
+        dataAPIOverdure = reqTaskOverdure.json()
+        listTaskOverdure = dataAPIOverdure['data']
         
         reqTaskAssigned = requests.get('http://localhost:32482/api/tarea/getAssignedTask', headers=headers)
         dataAPIAssigned = reqTaskAssigned.json()
@@ -47,7 +47,7 @@ def DashboardMain(request):
         cantTaskInProcess = (listTaskInProcess)
         cantTaskFinish = (listTaskFinish)
         cantTaskReject = (listTaskReject)
-        cantTaskCreated = (listTaskCreated)
+        cantTaskOverdure = (listTaskOverdure)
         cantTaskAssigned = (listTaskAssigned)
         
         
@@ -55,13 +55,13 @@ def DashboardMain(request):
             'getTaskInProcess': listTaskInProcess,
             'getTaskFinish': listTaskFinish,
             'getRejectTask': listTaskReject,
-            'getTaskCreated': listTaskCreated,
+            'getTaskOverdure': listTaskOverdure,
             'getAssignedTask': listTaskAssigned,
             'cantTask':cantTask,
             'cantTaskInProcess':cantTaskInProcess,
             'cantTaskFinish':cantTaskFinish,
             'cantTaskReject':cantTaskReject,
-            'cantTaskCreated':cantTaskCreated,
+            'cantTaskOverdure':cantTaskOverdure,
             'cantTaskAssigned':cantTaskAssigned
         }
 
