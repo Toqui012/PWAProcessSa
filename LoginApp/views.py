@@ -16,7 +16,7 @@ import requests, jwt, json
 
 # Función para desencriptar el token => Para obtener los valores
 def decodered(data):
-    data_token = jwt.decode(data,SECRET, algorithms=["H256"])
+    data_token = jwt.decode(data,SECRET, algorithms=["HS256"])
     return data_token
 
 #Función está autenticado
