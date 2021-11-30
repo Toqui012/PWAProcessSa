@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template.context_processors import request
 from LoginApp.views import authenticated, decodered
+
 import requests, jwt, json
 
 # Create your views here.

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reporte PDF Tareas</title>
+  <title>Reporte PDF Empresas</title>
 </head>
 <body>
   <style>
@@ -40,15 +40,27 @@ th, td{
   </style>
   <table>
     <tr>
+      <th>Rut Empleado</th>
       <th>Nombre</th>
-      <th>Encargado</th>
-      <th>Fecha Límite</th>
+      <th>Segundo Nombre</th>
+      <th>Apellido</th>
+      <th>Segundo Apellido</th>
+      <th>Numero Telefono</th>
+      <th>Correo Electronico</th>
+      <th>ID Rol Asociado</th>
+      <th>ID Unidad Interna Asociado</th>
     </tr>
-    {% for tarea in tareas %}
+    {% for usuario in usuarios %}
     <tr>
-      <td>{{tarea.nombreTarea}}</td>
-      <td>{{tarea.fkRutUsuario}}</td>
-      <td>{{tarea.fechaPlazo}}</td>
+      <td>{{usuario.rutUsuario}}</td>
+      <td>{{usuario.nombreUsuario}}</td>
+      <td>{{usuario.segundoNombre}}</td>
+      <td>{{usuario.apellidoUsuario}}</td>
+      <td>{{usuario.segundoApellido}}</td>
+      <td>{{usuario.numTelefono}}</td>
+      <td>{{usuario.correoElectronico}}</td>
+      <td>{{usuario.idRolUsuario}}</td>
+      <td>{{usuario.idUnidadInternaUsuario}}</td>
     </tr>
     {% endfor %}
   </table>

@@ -234,16 +234,17 @@ def AddTarea(request,nombreTarea,description,dateDeadline,taskPriority):
         token = request.COOKIES.get('validate')
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
 
+        dataT = decodered(token)
 
         # Datos a enviar a la petición POST
         payload = json.dumps({
                                 'nombreTarea':nombreTarea,
                                 'descripcionTarea': description,
                                 'fechaPlazo': dateDeadline,
-                                'fkRutUsuario' : '0.000.000',
+                                'fkRutUsuario' : dataT['nameid'],
                                 'porcentajeAvance': 5,
                                 'fechaCreacion': dateDeadline,
-                                'creadaPor': '0.000.000',
+                                'creadaPor': dataT['nameid'],
                                 'fkEstadoTarea' : 1,
                                 'fkPrioridadTarea' : int(taskPriority),
         })

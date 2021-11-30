@@ -1,71 +1,27 @@
-<!DOCTYPE html>
+{% extends 'PDF/base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reporte PDF Empresas</title>
-</head>
-<body>
-  <style>
-*{
-  font-family:sans-serif;
-  background:#f3f2ef;
-}
-table{
-  margin:200px auto;
-  text-align:center;
-  background:#fff;
-  border:4px solid dodgerblue;
-  padding:2px;
-}
-th, td{
-  border:2px solid dodgerblue;
-  background:#fff;
-  cursor:default;
-  padding:3px;
-}
-.butonlar{
-  cursor:pointer;
-  background:red;
-  color:white;
-  text-align:center;
-  outline:none;
-  border:none;
-  padding:10px 20px;
-  font-weight:bolder;
-  border-radius:4px;
-}
-  </style>
-  <table>
-    <tr>
-      <th>Rut Empleado</th>
-      <th>Nombre</th>
-      <th>Segundo Nombre</th>
-      <th>Apellido</th>
-      <th>Segundo Apellido</th>
-      <th>Numero Telefono</th>
-      <th>Correo Electronico</th>
-      <th>ID Rol Asociado</th>
-      <th>ID Unidad Interna Asociado</th>
-    </tr>
-    {% for usuario in usuarios %}
-    <tr>
-      <td>{{usuario.rutUsuario}}</td>
-      <td>{{usuario.nombreUsuario}}</td>
-      <td>{{usuario.segundoNombre}}</td>
-      <td>{{usuario.apellidoUsuario}}</td>
-      <td>{{usuario.segundoApellido}}</td>
-      <td>{{usuario.numTelefono}}</td>
-      <td>{{usuario.correoElectronico}}</td>
-      <td>{{usuario.idRolUsuario}}</td>
-      <td>{{usuario.idUnidadInternaUsuario}}</td>
-    </tr>
-    {% endfor %}
-  </table>
-  
-<script src="jquery-3.5.1.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-</body>
-</html>
+
+{% block content %}
+<table class="default">
+  <tr>
+    <th>Rut Empleado</th>
+    <th>Nombres</th>
+    <th>Apellidos</th>
+    <th>Numero Telefono</th>
+    <th colspan="2">Correo Electronico</th>
+    <th>Rol</th>
+    <th>Unidad Interna</th>
+  </tr>
+  {% for usuario in empleados %}
+  <tr>
+    <td><p>{{usuario.rutUsuario}}</p></td>
+    <td><p>{{usuario.nombreUsuario}} {{usuario.segundoNombre}}</p></td>
+    <td><p>{{usuario.apellidoUsuario}} {{usuario.segundoApellido}}</p></td>
+    <td><p>{{usuario.numTelefono}}</p></td>
+    <td colspan="2"><p>{{usuario.correoElectronico}}</p></td>
+    <td><p>{{usuario.idRolUsuario}}</p></td>
+    <td><p>{{usuario.idUnidadInternaUsuario}}</p></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

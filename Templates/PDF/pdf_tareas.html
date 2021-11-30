@@ -1,0 +1,39 @@
+{% extends 'PDF/base.html' %}
+{% load static %}
+
+{% block content %}
+<table class="default">
+  <tr>
+    <th>Nombre Tarea</th>
+    <th>Descripcion</th>
+    <th>Fecha Limite</th>
+    <th>Fecha Creacion</th>
+    <th>Rut Encargado</th>
+    <th>Creado por</th>
+  </tr>
+  {%for tarea in tareas %}
+  <tr>
+    <td>
+      <p>{{tarea.nombreTarea}}</p>
+    </td>
+    <td>
+      <p>{{tarea.descripcionTarea}}</p>
+    </td>
+    <td>
+      <p>{{tarea.fechaPlazo}}</p>
+    </td>
+    <td>
+      <p>{{tarea.fechaCreacion}}</p>
+    </td>
+    <td>
+      <p>{{tarea.fkRutUsuario}}</p>
+    </td>
+    <td>
+      <p>{{tarea.creadaPor}}</p>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
+
+

@@ -1,65 +1,25 @@
-<!DOCTYPE html>
+{% extends 'PDF/base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reporte PDF Empresas</title>
-</head>
-<body>
-  <style>
-*{
-  font-family:sans-serif;
-  background:#f3f2ef;
-}
-table{
-  margin:200px auto;
-  text-align:center;
-  background:#fff;
-  border:4px solid dodgerblue;
-  padding:2px;
-}
-th, td{
-  border:2px solid dodgerblue;
-  background:#fff;
-  cursor:default;
-  padding:3px;
-}
-.butonlar{
-  cursor:pointer;
-  background:red;
-  color:white;
-  text-align:center;
-  outline:none;
-  border:none;
-  padding:10px 20px;
-  font-weight:bolder;
-  border-radius:4px;
-}
-  </style>
-  <table>
-    <tr>
-      <th>Rut Empresa</th>
-      <th>Razon Social</th>
-      <th>Giro</th>
-      <th>Direccion</th>
-      <th>Numero Telefono</th>
-      <th>Correo Electronico</th>
-    </tr>
-    {% for empresa in empresas %}
-    <tr>
-      <td>{{empresa.rutEmpresa}}</td>
-      <td>{{empresa.razonSocial}}</td>
-      <td>{{empresa.giroEmpresa}}</td>
-      <td>{{empresa.direccionEmpresa}}</td>
-      <td>{{empresa.numeroTelefono}}</td>
-      <td>{{empresa.correoElectronicoEmpresa}}</td>
-    </tr>
-    {% endfor %}
-  </table>
-  
-<script src="jquery-3.5.1.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-</body>
-</html>
+
+{% block content %}
+<table class="default">
+  <tr>
+    <th>Rut Empresa</th>
+    <th>Razon Social</th>
+    <th>Giro</th>
+    <th>Direccion</th>
+    <th>Numero Telefono</th>
+    <th>Correo Electronico</th>
+  </tr>
+  {% for empresa in empresas %}
+  <tr>
+    <td><p>{{empresa.rutEmpresa}}</p></td>
+    <td><p>{{empresa.razonSocial}}</p></td>
+    <td><p>{{empresa.giroEmpresa}}</p></td>
+    <td><p>{{empresa.direccionEmpresa}}</p></td>
+    <td><p>{{empresa.numeroTelefono}}</p></td>
+    <td><p>{{empresa.correoElectronicoEmpresa}}</p></td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

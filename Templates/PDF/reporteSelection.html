@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-11">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title ">Reportes</h4>
+            <p class="card-category">Seleccione el reporte que desea crear</p>
+            <div class="card-content md-12 offset-md-10">
+            </div>
+          </div>
+          <div class="card-body">
+            <form method="POST"">
+              {% csrf_token %}
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Tipo de Informe</label>
+                    <select class="form-control form-select" name="grapichSelection" id="selectPrioridad">
+                      <option value="tareas">Tareas</option>
+                      <option value="empresas">Empresas</option>
+                      <option value="usuario">Empleados</option>
+                      <option value="tareaSubordinada">Tareas Subordinadas</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-success">Crear PDF</button>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
