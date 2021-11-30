@@ -63,6 +63,12 @@
                                 {% if task.fkEstadoTarea == 4 %}
                                   Rechazado
                                 {% endif %}
+                                {% if task.fkEstadoTarea == 5 %}
+                                  Finalizada
+                                {% endif %}
+                                {% if task.fkEstadoTarea == 6 %}
+                                  Atrasada
+                                {% endif %}
                               </td>
                             <td class="text-primary">
                               <a href="{% url 'AsignarTareaUsuarioSection' idTask=task.idTarea %}" class="btn btn-success">Asignar Tarea</a>

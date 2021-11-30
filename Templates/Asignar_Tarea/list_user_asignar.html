@@ -42,26 +42,26 @@
                         {% for users in data.users %}
                           <tr>
                             <td id="txtUserRut" name="txtUserRut">
-                              {{users.rutUsuario}}
+                              {{users.user.rutUsuario}}
                             </td>
                             <td>
-                              {{users.nombreUsuario}}
+                              {{users.user.nombreUsuario}}
                             </td>
                             <td>
-                              {{users.apellidoUsuario}}
+                              {{users.user.apellidoUsuario}}
                             </td>
                             <td>
-                              {{users.numTelefono}}
+                              {{users.user.numTelefono}}
                             </td>
                             <td>
-                              {{users.correoElectronico}}
+                              {{users.user.correoElectronico}}
                             </td>
                             <td>
-                              {% if users.idRolUsuario == 1 %}
+                              {% if users.user.idRolUsuario == 1 %}
                                   Administrador
-                              {% elif users.idRolUsuario == 41 %}
+                              {% elif users.user.idRolUsuario == 41 %}
                                   Funcionario 
-                              {% elif users.idRolUsuario == 42 %}
+                              {% elif users.user.idRolUsuario == 42 %}
                                   Diseñador de Procesos
                               {% endif %}
 
@@ -69,7 +69,7 @@
                             </td>
                             <td class="text-primary">
                                 {% comment %} <button type="submit" class="btn btn-primary">Asignar</button> {% endcomment %}
-                                <a href="{% url 'AssignTaskProcedure' idTask=data.idTask rutUser=users.rutUsuario %}" class="btn btn-success">Asignar</a>
+                                <a href="{% url 'AssignTaskProcedure' idTask=data.idTask rutUser=users.user.rutUsuario %}" class="btn btn-success">Asignar</a>
                             </td>
                           </tr>
                         {% endfor %}

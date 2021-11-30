@@ -15,6 +15,6 @@ urlpatterns = [
     path('addUserSection/', AddUserSection, name='AddUserSection'),
     path('userSection/deleteUserSection/<str:idUser>', DeleteUserSection, name = 'DeleteUserSection'),
     # path('userSection/updateUserSection/<str>:idUser>', EditUserSection, name = 'UpdateUserSection'),
-    path('userSection/updateUserSection/(?P<idUser>[0-9]+)$', EditUserSection, name = 'UpdateUserSection'),
+    path('userSection/updateUserSection/<str:idUser>', EditUserSection, name = 'UpdateUserSection'),
     path('logout/', logout, name='logout'),
 ]

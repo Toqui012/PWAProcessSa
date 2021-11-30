@@ -47,28 +47,28 @@
                         {% for users in data.users %}
                           <tr>
                             <td>
-                              {{users.rutUsuario}}
+                              {{users.user.rutUsuario}}
                             </td>
                             <td>
-                              {{users.nombreUsuario}}
+                              {{users.user.nombreUsuario}}
                             </td>
                             <td>
-                              {{users.apellidoUsuario}}
+                              {{users.user.apellidoUsuario}}
                             </td>
                             <td>
-                              {{users.numTelefono}}
+                              {{users.user.numTelefono}}
                             </td>
                             <td class="text-primary">
-                              {{users.correoElectronico}}
+                              {{users.user.correoElectronico}}
                             </td>
                             <td class="text-primary">
-                              {% if users.idRolUsuario == 1 %}
+                              {% if users.user.idRolUsuario == 1 %}
                                   Administrador
-                              {% elif users.idRolUsuario == 21 %}
+                              {% elif users.user.idRolUsuario == 21 %}
                                   Desarrollador 
-                              {% elif users.idRolUsuario == 23 %}
+                              {% elif users.user.idRolUsuario == 23 %}
                                   WEA2
-                              {% elif users.idRolUsuario == 41 %}
+                              {% elif users.user.idRolUsuario == 41 %}
                                   Secretario
                               {% endif %}
 
@@ -76,8 +76,8 @@
                             </td>
                             <td class="text-primary">
                               <a href="{% url 'AddUserSection' %}"><i class="material-icons">group_add</i></a>
-                              <a href="#" onclick="confirmOption('eliminar', 'deleteUserSection/{{users.rutUsuario}}')" ><i class="material-icons">delete</i></a>
-                              <a href="{% url 'UpdateUserSection' idUser=users.rutUsuario %}"><i class="material-icons">cached</i></a>
+                              <a href="#" onclick="confirmOption('eliminar', 'deleteUserSection/{{users.user.rutUsuario}}')" ><i class="material-icons">delete</i></a>
+                              <a href="{% url 'UpdateUserSection' idUser=users.user.rutUsuario %}"><i class="material-icons">cached</i></a>
                             </td>
                           </tr>
                         {% endfor %}

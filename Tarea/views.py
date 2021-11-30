@@ -85,10 +85,30 @@ def TareaSection(request):
         req = requests.get('http://localhost:32482/api/tarea', headers=headers)
         dataAPI = req.json()
         listTarea = dataAPI['data']
+        
+        reqUser = requests.get('http://localhost:32482/api/usuario', headers=headers)
+        dataAPIUser = reqUser.json()
+        listUser = dataAPIUser['data']
+        
+        # recopilacion de Rut Usuario authenticado
+        test = decodered(token)
+        print(test['nameid'])
+        
+        #Codigo Filtrado
+        filtroUnidadInterna = None
+        
+        for i in listUser:
+                if test['nameid'] == i['rutUsuario']: 
+                    filtroUnidadInterna = i['idUnidadInternaUsuario']
+                    
+        reqFiltroTarea = requests.get('http://localhost:32482/api/tarea/getTaskByBusiness/'+ str(filtroUnidadInterna), headers=headers)
+        dataAPIFiltrado = reqFiltroTarea.json()
+        listaFiltrada = dataAPIFiltrado['data']
+        print(listaFiltrada)
 
         #Variables con data a enviar a la vista
         context = {
-            'tareas': listTarea
+            'tareas': listaFiltrada
         }
         # Return Section
         return render(request, 'Tareas/list_tarea.html', {'data': context})

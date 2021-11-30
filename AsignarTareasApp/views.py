@@ -18,9 +18,28 @@ def AsignarTareaSection(request):
         reqTask = requests.get('http://localhost:32482/api/tarea/', headers=headers)
         dataAPI = reqTask.json()
         listTask = dataAPI['data']
+        
+        reqUser = requests.get('http://localhost:32482/api/usuario', headers=headers)
+        dataAPIUser = reqUser.json()
+        listUser = dataAPIUser['data']
+        
+        # recopilacion de Rut Usuario authenticado
+        test = decodered(token)
+        print(test['nameid'])
+        
+        #Codigo Filtrado
+        filtroUnidadInterna = None
+        
+        for i in listUser:
+                if test['nameid'] == i['rutUsuario']: 
+                    filtroUnidadInterna = i['idUnidadInternaUsuario']
+                    
+        reqFiltroTarea = requests.get('http://localhost:32482/api/tarea/getTaskByBusiness/'+ str(filtroUnidadInterna), headers=headers)
+        dataAPIFiltrado = reqFiltroTarea.json()
+        listaFiltrada = dataAPIFiltrado['data']
 
         context = {
-            'task': listTask
+            'task': listaFiltrada
         }
 
         # Return Section
@@ -36,9 +55,26 @@ def AsignarTareaUsuarioSection(request, idTask):
         reqUsers = requests.get('http://localhost:32482/api/usuario', headers=headers)
         dataAPI = reqUsers.json()
         listUsers = dataAPI['data']
+        
+        
+        # Prueba de test
+        test = decodered(token)
+        print(test['nameid'])
+        
+        #Codigo Filtrado
+        filtroUnidadInterna = None
+        
+        for i in listUsers:
+            if test['nameid'] == i['rutUsuario']: 
+                filtroUnidadInterna = i['idUnidadInternaUsuario']
+                
+        reqFiltroUsuario = requests.get('http://localhost:32482/api/tarea/getUserByBusiness/'+ str(filtroUnidadInterna), headers=headers)
+        dataAPIFiltrado = reqFiltroUsuario.json()
+        listaFiltrada = dataAPIFiltrado['data']
+        
         # Variables con data a enviar a la vista
         context = {
-            'users': listUsers,
+            'users': listaFiltrada,
             'idTask': idTask
         }
 

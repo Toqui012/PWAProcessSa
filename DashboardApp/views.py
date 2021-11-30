@@ -78,10 +78,28 @@ def UserSection(request):
         req = requests.get('http://localhost:32482/api/usuario', headers=headers)
         dataAPI = req.json()
         listUser = dataAPI['data']
+        
+        # Prueba de test
+        test = decodered(token)
+        print(test['nameid'])
+        
+        #Codigo Filtrado
+        filtroUnidadInterna = None
+        
+        for i in listUser:
+            if test['nameid'] == i['rutUsuario']: 
+                filtroUnidadInterna = i['idUnidadInternaUsuario']
+                
+        reqFiltroUsuario = requests.get('http://localhost:32482/api/tarea/getUserByBusiness/'+ str(filtroUnidadInterna), headers=headers)
+        dataAPIFiltrado = reqFiltroUsuario.json()
+        listaFiltrada = dataAPIFiltrado['data']
+        
+        print(listaFiltrada)
 
         #Variables con data a enviar a la vista
         context = {
-            'users': listUser
+            'users': listaFiltrada,
+            # 'userEmployee': listaFiltrada
         }
         # Return Section
         return render(request, 'User/list_user.html', {'data': context})
@@ -199,7 +217,7 @@ def EditUserSection(request, idUser):
         rutUserToSearch = ''
         for x in OneUser:
             rutUserToSearch = x['rutUsuario']
-
+            
 
         #Validate Data Extraction
         if request.method == 'POST':

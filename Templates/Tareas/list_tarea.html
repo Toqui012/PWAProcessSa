@@ -30,6 +30,9 @@
                           Dead Line
                         </th>
                         <th>
+                          Estado Tarea
+                        </th>
+                        <th>
                           Acciones
                         </th>
                       </thead>
@@ -37,17 +40,32 @@
                         {% for tareas in data.tareas %}
                           <tr>
                             <td>
-                              {{tareas.nombreTarea}}
+                              {{tareas.tarea}}
                             </td>
                             <td>
-                              {{tareas.fkRutUsuario}}
+                              {{tareas.descripcionTarea}}
                             </td>
                             <td>
                               {{tareas.fechaPlazo}}
                             </td>
+                            <td>
+                              {% if tareas.fkEstadoTarea == 1 %}
+                                Creada
+                              {% elif tareas.fkEstadoTarea == 2 %}
+                                Asignada
+                              {% elif tareas.fkEstadoTarea == 3 %}
+                                Aceptada
+                              {% elif tareas.fkEstadoTarea == 4 %}
+                                Rechazada
+                              {% elif tareas.fkEstadoTarea == 5 %}
+                                Finalizada
+                              {% elif tareas.fkEstadoTarea == 6 %}
+                                Atrasada
+                              {% endif %}
+                            </td>
                             <td class="text-primary">
                               <a href="{% url 'AddTareaSection' %}"><i class="material-icons">group_add</i></a>
-                              <a href="#" onclick="confirmOption('eliminar', 'deleteTareaSection/{{tareas.idTarea}}')"><i class="material-icons">delete</i></a>
+                              <a href="#" onclick="confirmOption('eliminar', 'deleteTareaSection/{{tareas.tarea.idTarea}}')"><i class="material-icons">delete</i></a>
                               <a href="{% url 'UpdateTareaSection' idTarea=tareas.idTarea %}"><i class="material-icons">cached</i></a>
                             </td>
                           </tr>
