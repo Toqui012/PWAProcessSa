@@ -13,19 +13,19 @@
   {%for tarea in tareasSubordinadas %}
   <tr>
     <td>
-      <p>{{tarea.nombreSubordinada}}</p>
+      <p>{{tarea.tareaSubordinada.nombreSubordinada}}</p>
     </td>
     <td>
-      <p>{{tarea.descripcionSubordinada}}</p>
+      <p>{{tarea.tareaSubordinada.descripcionSubordinada}}</p>
     </td>
     <td>
-      <p>{{tarea.fkIdPrioridad}}</p>
+      <p>{{tarea.tareaSubordinada.fkPrioridadTarea}}</p>
     </td>
     <td>
-      <p>{{tarea.fkIdEstado}}</p>
+      <p>{{tarea.tareaSubordinada.fkEstadoTarea}}</p>
     </td>
     <td>
-      <p>{{tarea.fkIdTarea}}</p>
+      <p>{{tarea.tareaSubordinada.fkIdTarea}}</p>
     </td>
   {% endfor %}
 </table>

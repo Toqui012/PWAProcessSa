@@ -14,13 +14,13 @@
   </tr>
   {% for usuario in empleados %}
   <tr>
-    <td><p>{{usuario.rutUsuario}}</p></td>
-    <td><p>{{usuario.nombreUsuario}} {{usuario.segundoNombre}}</p></td>
-    <td><p>{{usuario.apellidoUsuario}} {{usuario.segundoApellido}}</p></td>
-    <td><p>{{usuario.numTelefono}}</p></td>
-    <td colspan="2"><p>{{usuario.correoElectronico}}</p></td>
-    <td><p>{{usuario.idRolUsuario}}</p></td>
-    <td><p>{{usuario.idUnidadInternaUsuario}}</p></td>
+    <td><p>{{usuario.user.rutUsuario}}</p></td>
+    <td><p>{{usuario.user.nombreUsuario}} {{usuario.user.segundoNombre}}</p></td>
+    <td><p>{{usuario.user.apellidoUsuario}} {{usuario.user.segundoApellido}}</p></td>
+    <td><p>{{usuario.user.numTelefono}}</p></td>
+    <td colspan="2"><p>{{usuario.user.correoElectronico}}</p></td>
+    <td><p>{{usuario.user.idRolUsuario}}</p></td>
+    <td><p>{{usuario.user.idUnidadInternaUsuario}}</p></td>
   </tr>
   {% endfor %}
 </table>
