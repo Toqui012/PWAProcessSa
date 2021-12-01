@@ -26,8 +26,6 @@ def GrafictSection(request):
             option = request.POST.get('grapichSelection')
             if option == 'tareas':
                 return ReporteTarea(request)
-            if option == 'empresas':
-                return ReporteEmpresas(request)
             if option == 'usuario':
                 return ReporteEmpleados(request)
             if option == 'tareaSubordinada':
@@ -135,35 +133,7 @@ def ReporteTareaSubordinada(request, *args, **kwargs):
         return HttpResponseRedirect(reverse_lazy('DashboardMain'))   
 
 
-# reporte Empresas 
-def ReporteEmpresas(request, *args, **kwargs):
-    if authenticated(request):
-        template = get_template('PDF/pdf_empresas.html')
-        # Consumo de API: Empresas
-        # Method: GET
-        token = request.COOKIES.get('validate')
-        headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
-        req = requests.get('http://localhost:32482/api/business', headers=headers)
-        dataAPI = req.json()
-        listEmpresas = dataAPI['data']
-        #Variables con data a enviar a la vista
-        context = {
-            'empresas': listEmpresas,
-            'name':'Empresas'
-        }
-        # Return Section
-        html = template.render(context)
-        # Comentar la línea de abajo para que no se descargue automático
-        response = HttpResponse(content_type='application/pdf')
-        #response['Content-Disposition'] = 'attachment; filename="reporte_empresa.pdf"'
-        pisaStatus = pisa.CreatePDF(
-            html, dest=response
-        )
-        if pisaStatus.err:
-            return HttpResponse('We had some errors <pre>' + html + '</pre>')
-        return response
-    else:
-        return HttpResponseRedirect(reverse_lazy('DashboardMain'))
+
 
 
 

@@ -18,9 +18,39 @@ def TareaSubordinadaSection(request):
         dataAPI = req.json()
         listTareaSubordinada = dataAPI['data']
 
+        reqUser = requests.get('http://localhost:32482/api/usuario', headers=headers)
+        dataAPIUser = reqUser.json()
+        listUser = dataAPIUser['data']
+
+        reqUnidadInterna = requests.get('http://localhost:32482/api/unidadInterna', headers=headers)
+        dataAPIUnidadInterna = reqUnidadInterna.json()
+        listUnidadInterna = dataAPIUnidadInterna['data']
+
+        test = decodered(token)
+        print(test['nameid'])
+
+        # Código Filtrado
+        filtroUnidadInterna = None
+
+        filtroEmpresa = None
+
+        for i in listUser:
+            if test['nameid'] == i['rutUsuario']:
+                filtroUnidadInterna = i['idUnidadInternaUsuario']
+
+        for i in listUnidadInterna:
+            if filtroUnidadInterna == i['idUnidadInterna']:
+                filtroEmpresa = i['fkRutEmpresa']
+
+        reqFiltroTareaSubordinada = requests.get('http://localhost:32482/api/TareaSubordinada/getTareaSubordinadaByBusiness/' + str(filtroEmpresa), headers=headers)
+        dataAPIFiltrado = reqFiltroTareaSubordinada.json()
+        listaFiltrada = dataAPIFiltrado['data']
+        print(listaFiltrada)
+        
+
         #Variables con data a enviar a la vista
         context = {
-            'tareaSubordinada': listTareaSubordinada
+            'tareaSubordinada': listaFiltrada
         }
 
         return render(request, 'Tarea_Subordinada/list_tarea_subordinada.html', {'data': context})

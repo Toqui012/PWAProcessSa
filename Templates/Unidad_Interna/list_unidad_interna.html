@@ -34,24 +34,24 @@
                         </th>
                       </thead>
                       <tbody>
-                        {% for unidadInterna in data.unidadInterna %}
+                        {% for x in data.unidadInterna %}
                           <tr>
                             <td>
-                              {{unidadInterna.idUnidadInterna}}
+                              {{x.unidadInterna.idUnidadInterna}}
                             </td>
                             <td>
-                              {{unidadInterna.nombreUnidad}}
+                              {{x.unidadInterna.nombreUnidad}}
                             </td>
                             <td>
-                              {{unidadInterna.descripcionUnidad}}
+                              {{x.unidadInterna.descripcionUnidad}}
                             </td>
                             <td>
-                                {{unidadInterna.fkRutEmpresa}}
+                                {{x.unidadInterna.fkRutEmpresa}}
                               </td>
                             <td class="text-primary">
                               <a href="{% url 'AddUnidadInternaSection' %}"><i class="material-icons">group_add</i></a>
-                              <a href="#" onclick="confirmOption('eliminar', 'deleteUnidadInternaSection/{{unidadInterna.idUnidadInterna}}')"><i class="material-icons">delete</i></a>
-                              <a href="{% url 'EditUnidadInternaSection' idUnidadInterna=unidadInterna.idUnidadInterna %}"><i class="material-icons">cached</i></a>
+                              <a href="#" onclick="confirmOption('eliminar', 'deleteUnidadInternaSection/{{x.unidadInterna.idUnidadInterna}}')"><i class="material-icons">delete</i></a>
+                              <a href="{% url 'EditUnidadInternaSection' idUnidadInterna=x.unidadInterna.idUnidadInterna %}"><i class="material-icons">cached</i></a>
                             </td>
                           </tr>
                         {% endfor %}
