@@ -15,9 +15,35 @@ def UnidadInternaSection(request):
         dataAPI = req.json()
         listUnidadInterna = dataAPI['data']
 
+        reqUser = requests.get('http://localhost:32482/api/usuario', headers=headers)
+        dataAPIUser = reqUser.json()
+        listUser = dataAPIUser['data']
+
+        test = decodered(token)
+        print(test['nameid'])
+
+        # Código Filtrado
+        filtroUnidadInterna = None
+
+        filtroEmpresa = None
+
+        for i in listUser:
+            if test['nameid'] == i['rutUsuario']:
+                filtroUnidadInterna = i['idUnidadInternaUsuario']
+
+        for i in listUnidadInterna:
+            if filtroUnidadInterna == i['idUnidadInterna']:
+                filtroEmpresa = i['fkRutEmpresa']
+
+        reqFiltroUnidadInterna = requests.get('http://localhost:32482/api/unidadInterna/getUnidadInternaByBusiness/' + str(filtroEmpresa), headers=headers)
+        dataAPIFiltrado = reqFiltroUnidadInterna.json()
+        listaFiltrada = dataAPIFiltrado['data']
+        print(listaFiltrada)
+
+
         # Variables a enviar a la vista
         context = {
-            'unidadInterna': listUnidadInterna
+            'unidadInterna': listaFiltrada
         }
 
         return render(request, 'Unidad_Interna/list_unidad_interna.html', {'data': context})

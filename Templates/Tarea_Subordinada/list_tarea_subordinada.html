@@ -34,21 +34,21 @@
                         </th>
                       </thead>
                       <tbody>
-                        {% for tareaSubordinada in data.tareaSubordinada %}
+                        {% for x in data.tareaSubordinada %}
                           <tr>
                             <td>
-                              {{tareaSubordinada.idTareaSubordinada}}
+                              {{x.tareaSubordinada.idTareaSubordinada}}
                             </td>
                             <td>
-                              {{tareaSubordinada.nombreSubordinada}}
+                              {{x.tareaSubordinada.nombreSubordinada}}
                             </td>
                             <td>
-                              {{tareaSubordinada.descripcionSubordinada}}
+                              {{x.tareaSubordinada.descripcionSubordinada}}
                             </td>
                             <td class="text-primary">
                               <a href="{% url 'AddTareaSubordinadaSection' %}"><i class="material-icons">group_add</i></a>
-                              <a href="#" onclick="confirmOption('eliminar', 'deleteTareaSubordinadaSection/{{tareaSubordinada.idTareaSubordinada}}')" ><i class="material-icons">delete</i></a>        
-                              <a href="{% url 'EditTareaSubordinadaSection' idTareaSub=tareaSubordinada.idTareaSubordinada %}"><i class="material-icons">cached</i></a>
+                              <a href="#" onclick="confirmOption('eliminar', 'deleteTareaSubordinadaSection/{{x.tareaSubordinada.idTareaSubordinada}}')" ><i class="material-icons">delete</i></a>        
+                              <a href="{% url 'EditTareaSubordinadaSection' idTareaSub=x.tareaSubordinada.idTareaSubordinada %}"><i class="material-icons">cached</i></a>
                             </td>
                           </tr>
                         {% endfor %}
