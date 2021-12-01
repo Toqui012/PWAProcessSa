@@ -39,6 +39,10 @@ def DashboardMain(request):
         dataAPIAssigned = reqTaskAssigned.json()
         listTaskAssigned = dataAPIAssigned['data']
         
+        reqFinishTaskWithProblem = requests.get('http://localhost:32482/api/tarea/getFinishTaskWithProblem', headers=headers)
+        dataAPIFinishTaskWithProblem = reqFinishTaskWithProblem.json()
+        listFinishTaskWithProblem = dataAPIFinishTaskWithProblem['data']
+        
         reqTaskList = requests.get('http://localhost:32482/api/tarea', headers=headers)
         dataAPITaskList = reqTaskList.json()
         listTarea = dataAPITaskList['data']
@@ -49,7 +53,11 @@ def DashboardMain(request):
         cantTaskReject = (listTaskReject)
         cantTaskOverdure = (listTaskOverdure)
         cantTaskAssigned = (listTaskAssigned)
+        cantFinishTaskWithProblem = (listFinishTaskWithProblem)
         
+        # Prueba de test
+        test = decodered(token)
+        print(test['nameid'])
         
         context = {
             'getTaskInProcess': listTaskInProcess,
@@ -62,7 +70,9 @@ def DashboardMain(request):
             'cantTaskFinish':cantTaskFinish,
             'cantTaskReject':cantTaskReject,
             'cantTaskOverdure':cantTaskOverdure,
-            'cantTaskAssigned':cantTaskAssigned
+            'cantTaskAssigned':cantTaskAssigned,
+            'cantFinishTaskWithProblem': cantFinishTaskWithProblem,
+            'rutUsuarioLogeado': test['nameid'] 
         }
 
         # Return Section

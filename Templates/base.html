@@ -63,36 +63,38 @@ The above copyright notice and this permission notice shall be included in all c
               <p>Unidad Interna</p>
             </a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'UserSection' %}">
-              <i class="material-icons">class</i>
-              <p>Empleados</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'TareaSection' %}">
-              <i class="material-icons">class</i>
-              <p>Tareas</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'TareaSubordinadaSection' %}">
-              <i class="material-icons">class</i>
-              <p>Tareas Subordinadas</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'AsignarTareaSection' %}">
-              <i class="material-icons">class</i>
-              <p>Asignar Tareas</p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'pdf_generator' %}">
-              <i class="material-icons">class</i>
-              <p>Reportes PDF</p>
-            </a>
-          </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="{% url 'UserSection' %}">
+                <i class="material-icons">class</i>
+                <p>Empleados</p>
+              </a>
+            </li>
+          {% if data.rutUsuarioLogeado != '0.000.000' %}
+            <li class="nav-item ">
+              <a class="nav-link" href="{% url 'TareaSection' %}">
+                <i class="material-icons">class</i>
+                <p>Tareas</p>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="{% url 'TareaSubordinadaSection' %}">
+                <i class="material-icons">class</i>
+                <p>Tareas Subordinadas</p>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="{% url 'AsignarTareaSection' %}">
+                <i class="material-icons">class</i>
+                <p>Asignar Tareas</p>
+              </a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="{% url 'pdf_generator' %}">
+                <i class="material-icons">class</i>
+                <p>Reportes PDF</p>
+              </a>
+            </li>
+          {% endif %}
         </ul>
       </div>
     </div>

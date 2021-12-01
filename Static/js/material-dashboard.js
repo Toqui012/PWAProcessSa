@@ -375,6 +375,9 @@ md = {
       let getRejectTask = parseInt(document.getElementById('rejectTask').innerText);
       let getTaskOverdure =  parseInt(document.getElementById('taskOverdure').innerText);
       let getAssignedTask = parseInt(document.getElementById('assignedTask').innerText);
+      let getFinishTaskWithProblem = parseInt(document.getElementById('cantFinishTaskWithProblem').innerText);
+
+    
 
 
       const arrayValueTask = [getTaskInProcess, getTaskFinished, getRejectTask, getTaskOverdure, getAssignedTask];
@@ -386,9 +389,9 @@ md = {
       });
       
       var dataWebsiteViewsChart = {
-        labels: ['Aceptada', 'Rechazada', 'Asignada', 'Finalizada', 'Rechazada'],
+        labels: ['Aceptada', 'Rechazada', 'Asignada', 'Finalizada', 'Rechazada', 'Acpetado con Problema'],
         series: [
-          [getTaskInProcess, getRejectTask, getAssignedTask, getTaskFinished, getTaskOverdure]
+          [getTaskInProcess, getRejectTask, getAssignedTask, getTaskFinished, getTaskOverdure, getFinishTaskWithProblem]
 
         ]
       };
