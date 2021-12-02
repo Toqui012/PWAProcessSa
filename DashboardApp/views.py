@@ -16,7 +16,7 @@ def DashboardMain(request):
         
         # Consumo de API: Tarea
         # Method: GET
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         
         reqInProcess = requests.get('http://localhost:32482/api/tarea/getTaskInProcess', headers=headers)
@@ -84,7 +84,7 @@ def UserSection(request):
     if authenticated(request):
         # Consumo de API: Usuario
         # Method: GET
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         req = requests.get('http://localhost:32482/api/usuario', headers=headers)
         dataAPI = req.json()
@@ -111,6 +111,7 @@ def UserSection(request):
         context = {
             'users': listaFiltrada,
             # 'userEmployee': listaFiltrada
+            'rutUsuarioLogeado': test['nameid']
         }
         # Return Section
         return render(request, 'User/list_user.html', {'data': context})
@@ -120,9 +121,14 @@ def UserSection(request):
 def AddUserSection(request):
     if authenticated(request):
         status = 'NO_CONTENT'
+
+        
         # Consumo de API: Rol
         # Method: GET
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+
+        test = decodered(token)
+
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         resRole = requests.get('http://localhost:32482/api/rol', headers=headers)
         dataRole = resRole.json()
@@ -158,6 +164,8 @@ def AddUserSection(request):
             'role': listRole,
             'unidadInterna': listUnidad,
             'statusCreation': status,
+            'rutUsuarioLogeado': test['nameid']
+            
         }
         #Return Section
         return render(request, 'User/user.html',{'data':context})
@@ -167,7 +175,10 @@ def AddUserSection(request):
 def DeleteUserSection(request, idUser):
     if authenticated:
         status = 'NO_CONTENT'
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+
+        test = decodered(token)
+
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
         
         # Consumo de API: Usuario
@@ -184,6 +195,7 @@ def DeleteUserSection(request, idUser):
         context = {
             'users': listUser,
             'deteleStatus':status,
+            'rutUsuarioLogeado': test['nameid']
         }
 
         if r.ok:
@@ -202,7 +214,8 @@ def EditUserSection(request, idUser):
 
         # Configuración Header
         status = 'NO_CONTENT'
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
 
         # Consumo de API: Rol
@@ -259,6 +272,7 @@ def EditUserSection(request, idUser):
             'unidadInterna': listUnidad,
             'statusUpdate': status,
             'oneUser': OneUser,
+            'rutUsuarioLogeado': test['nameid']
         }
 
         # Return Section
@@ -275,7 +289,7 @@ def EditUserSection(request, idUser):
 # METHOD: POST
 def AddUser(request,rut, firstName, secondName, lastName, secondLastName, email, numberPhone, roleUser, internalDrive, password):
     if authenticated:
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
 
 
@@ -295,7 +309,7 @@ def AddUser(request,rut, firstName, secondName, lastName, secondLastName, email,
 
 def EditUser(request,rut, firstName, secondName, lastName, secondLastName, email, numberPhone, roleUser, internalDrive, rutToSearch):
     if authenticated:
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
 
 

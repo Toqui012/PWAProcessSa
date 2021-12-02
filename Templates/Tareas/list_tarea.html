@@ -65,7 +65,7 @@
                             </td>
                             <td class="text-primary">
                               <a href="{% url 'AddTareaSection' %}"><i class="material-icons">group_add</i></a>
-                              <a href="#" onclick="confirmOption('eliminar', 'deleteTareaSection/{{tareas.tarea.idTarea}}')"><i class="material-icons">delete</i></a>
+                              <a href="#" onclick="confirmOption('eliminar', 'deleteTareaSection/{{tareas.idTarea}}')"><i class="material-icons">delete</i></a>
                               <a href="{% url 'UpdateTareaSection' idTarea=tareas.idTarea %}"><i class="material-icons">cached</i></a>
                             </td>
                           </tr>

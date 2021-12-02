@@ -9,7 +9,8 @@ import requests, jwt, json
 
 def UnidadInternaSection(request):
     if(authenticated): 
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         req = requests.get('http://localhost:32482/api/unidadInterna', headers=headers)
         dataAPI = req.json()
@@ -43,7 +44,8 @@ def UnidadInternaSection(request):
 
         # Variables a enviar a la vista
         context = {
-            'unidadInterna': listaFiltrada
+            'unidadInterna': listaFiltrada,
+            'rutUsuarioLogeado': test['nameid']
         }
 
         return render(request, 'Unidad_Interna/list_unidad_interna.html', {'data': context})
@@ -52,7 +54,8 @@ def AddUnidadInternaSection(request):
     if authenticated(request):
         # Consumo de API: Empresa
         # Method: GET
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         resEmpresa = requests.get('http://localhost:32482/api/business', headers=headers)
         dataEmpresa = resEmpresa.json()
@@ -79,6 +82,7 @@ def AddUnidadInternaSection(request):
         context = {
             'empresa': listEmpresa,
             'statusCreation': status,
+            'rutUsuarioLogeado': test['nameid']
         }
 
         # Return Section
@@ -87,7 +91,8 @@ def AddUnidadInternaSection(request):
 def DeleteUnidadInternaSection(request, idUnidadInterna): 
     if authenticated:
         status = 'NO_CONTENT'
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
 
         # Consumo de API: Unidad Interna
@@ -105,7 +110,8 @@ def DeleteUnidadInternaSection(request, idUnidadInterna):
 
         context = {
             'unidadInterna': listUnidadInterna,
-            'deleteStatus': status
+            'deleteStatus': status,
+            'rutUsuarioLogeado': test['nameid']
         }
 
         if r.ok:
@@ -124,7 +130,8 @@ def EditUnidadInternaSection(request, idUnidadInterna):
     if authenticated:
         # Configuración del header
         status = 'NO_CONTENT'
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         
         # Consumo de API: Empresa
@@ -169,7 +176,8 @@ def EditUnidadInternaSection(request, idUnidadInterna):
         context = {
             'empresa': listEmpresa,
             'statusUpdate': status,
-            'oneUnidadInterna': OneUnidadInterna
+            'oneUnidadInterna': OneUnidadInterna,
+            'rutUsuarioLogeado': test['nameid']
         }
 
         # Return Section
@@ -187,7 +195,7 @@ def EditUnidadInternaSection(request, idUnidadInterna):
 # METHOD: POST
 def AddUnidadInterna(request, nombre, descripcion, fkRutEmpresa):
     if authenticated:
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
 
         # Datos a enviar a la petición POST
@@ -200,7 +208,7 @@ def AddUnidadInterna(request, nombre, descripcion, fkRutEmpresa):
 
 def EditUnidadInterna(request, nombre, descripcion, fkRutEmpresa, idUnidadInternaToSearch):
     if authenticated:
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
 
         # Datos a enviar a la petición PUT

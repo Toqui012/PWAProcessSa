@@ -13,7 +13,7 @@ import requests, jwt, json
 # Función encargada de mostrar el listado de tareas disponibles a asignar
 def AsignarTareaSection(request):
     if authenticated(request):
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         reqTask = requests.get('http://localhost:32482/api/tarea/', headers=headers)
         dataAPI = reqTask.json()
@@ -39,7 +39,8 @@ def AsignarTareaSection(request):
         listaFiltrada = dataAPIFiltrado['data']
 
         context = {
-            'task': listaFiltrada
+            'task': listaFiltrada,
+            'rutUsuarioLogeado': test['nameid'] 
         }
 
         # Return Section
@@ -50,7 +51,7 @@ def AsignarTareaSection(request):
 # Función encargada de asignar una tarea a un usuario
 def AsignarTareaUsuarioSection(request, idTask):
     if authenticated(request):
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         reqUsers = requests.get('http://localhost:32482/api/usuario', headers=headers)
         dataAPI = reqUsers.json()
@@ -75,7 +76,8 @@ def AsignarTareaUsuarioSection(request, idTask):
         # Variables con data a enviar a la vista
         context = {
             'users': listaFiltrada,
-            'idTask': idTask
+            'idTask': idTask,
+            'rutUsuarioLogeado': test['nameid']
         }
 
         # Return Section
@@ -86,7 +88,7 @@ def AsignarTareaUsuarioSection(request, idTask):
 def AssignTask(request, idTask, rutUser):
     if authenticated(request):
         try:
-            token = request.COOKIES.get('validate')
+            token = request.COOKIES.get('validatepwa')
             headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
             reqAssignTask = requests.put('http://localhost:32482/api/tarea/assignTask/'+ idTask + '/' + rutUser , headers=headers)
             print(reqAssignTask)

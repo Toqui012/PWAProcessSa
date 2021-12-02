@@ -64,14 +64,11 @@
                             <td class="text-primary">
                               {% if users.user.idRolUsuario == 1 %}
                                   Administrador
-                              {% elif users.user.idRolUsuario == 21 %}
-                                  Desarrollador 
-                              {% elif users.user.idRolUsuario == 23 %}
-                                  WEA2
-                              {% elif users.user.idRolUsuario == 41 %}
-                                  Secretario
+                              {% elif users.user.idRolUsuario == 2 %}
+                                  Funcionario 
+                              {% elif users.user.idRolUsuario == 3 %}
+                                  Diseñador de Procesos 
                               {% endif %}
-
                               {{users.idRolUsuario}}
                             </td>
                             <td class="text-primary">

@@ -12,7 +12,8 @@ import requests, jwt, json
 def TareaSubordinadaSection(request):
     if authenticated(request):
         # Return Section
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         req = requests.get('http://localhost:32482/api/TareaSubordinada', headers=headers)
         dataAPI = req.json()
@@ -50,7 +51,8 @@ def TareaSubordinadaSection(request):
 
         #Variables con data a enviar a la vista
         context = {
-            'tareaSubordinada': listaFiltrada
+            'tareaSubordinada': listaFiltrada,
+            'rutUsuarioLogeado': test['nameid']
         }
 
         return render(request, 'Tarea_Subordinada/list_tarea_subordinada.html', {'data': context})
@@ -59,7 +61,8 @@ def AddTareaSubordinadaSection(request):
     if authenticated(request):
         # Consumo de API: Tarea
         # Method: GET
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         resTarea = requests.get('http://localhost:32482/api/tarea', headers=headers)
         dataTarea = resTarea.json()
@@ -101,6 +104,7 @@ def AddTareaSubordinadaSection(request):
             'prioridad': listPrioridad,
             'estado': listEstado,
             'statusCreation': status,
+            'rutUsuarioLogeado': test['nameid']
         }
 
         # Return Section
@@ -112,7 +116,8 @@ def AddTareaSubordinadaSection(request):
 def DeleteTareaSubordinadaSection(request, idTareaSub):
     if authenticated:
         status = 'NO_CONTENT'
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
 
         # Consumo de API: Tarea Subordinada
@@ -130,7 +135,8 @@ def DeleteTareaSubordinadaSection(request, idTareaSub):
 
         context = {
             'tareaSubordinada': listTareaSubordinada,
-            'deleteStatus': status
+            'deleteStatus': status,
+            'rutUsuarioLogeado': test['nameid']
         }
 
         if r.ok:
@@ -151,7 +157,8 @@ def EditTareaSubordinadaSection(request, idTareaSub):
 
         # Configuración Header
         status = 'NO_CONTENT'
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
 
         # Consumo de API: Tarea
@@ -199,6 +206,7 @@ def EditTareaSubordinadaSection(request, idTareaSub):
             'tarea': listTarea,
             'statusUpdate': status,
             'oneTareaSubordinada': OneTareaSubordinada,
+            'rutUsuarioLogeado': test['nameid']
         }
 
         # Return Section
@@ -217,7 +225,7 @@ def EditTareaSubordinadaSection(request, idTareaSub):
 # METHOD: POST
 def AddTareaSubordinada(request, nombre, descripcion, prioridadFk, estadoFk, tareaFk):
     if authenticated:
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+token, 'Accept': '*/*' }
 
         # Datos a enviar a la petición POST
@@ -232,7 +240,7 @@ def AddTareaSubordinada(request, nombre, descripcion, prioridadFk, estadoFk, tar
 # METHOD: PUT
 def EditTareaSubordinada(request, nombre, descripcion, prioridadFk, estadoFk, tareaFk, idTareaSubordinadaToSearch):
     if authenticated:
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
 
 

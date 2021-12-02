@@ -17,7 +17,8 @@ from django.views.generic import TemplateView, View
 # seccion para elgir el PDF a crear
 def GrafictSection(request):
     if authenticated(request):
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         
         
@@ -42,7 +43,8 @@ def ReporteTarea(request):
         template = get_template('PDF/pdf_tareas.html')
         # Consumo de API: Usuario
         # Method: GET
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         req = requests.get('http://localhost:32482/api/tarea', headers=headers)
         dataAPI = req.json()
@@ -51,7 +53,8 @@ def ReporteTarea(request):
         #Variables con data a enviar a la vista
         context = {
             'tareas': listTarea,
-            'name':'Tareas'
+            'name':'Tareas',
+            'rutUsuarioLogeado': test['nameid']
         }
         # Return Section
         html = template.render(context)
@@ -75,7 +78,8 @@ def ReporteEmpleados(request):
         template = get_template('PDF/pdf_empleados.html')
         # Consumo de API: Usuario
         # Method: GET
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         req = requests.get('http://localhost:32482/api/usuario', headers=headers)
         dataAPI = req.json()
@@ -85,7 +89,8 @@ def ReporteEmpleados(request):
         
         context = {
             'empleados': listTarea,
-            'name':'Empleados'
+            'name':'Empleados',
+            'rutUsuarioLogeado': test['nameid']
         }
         # Return Section
         html = template.render(context)
@@ -108,7 +113,8 @@ def ReporteTareaSubordinada(request, *args, **kwargs):
         template = get_template('PDF/pdf_tarea_subordinada.html')
         # Consumo de API: Tareas Subordinadas
         # Method: GET
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         req = requests.get('http://localhost:32482/api/TareaSubordinada', headers=headers)
         dataAPI = req.json()
@@ -116,7 +122,8 @@ def ReporteTareaSubordinada(request, *args, **kwargs):
         #Variables con data a enviar a la vista
         context = {
             'tareasSubordinadas': listTareaSubordinada,
-            'name':'Tareas Subordinadas'
+            'name':'Tareas Subordinadas',
+            'rutUsuarioLogeado': test['nameid']
         }
         # Return Section
         html = template.render(context)
@@ -132,32 +139,6 @@ def ReporteTareaSubordinada(request, *args, **kwargs):
     else:
         return HttpResponseRedirect(reverse_lazy('DashboardMain'))   
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Clase para pdf TEST
 class TestPDF(TemplateView):
     def get(self, request, *args, **kwargs):
@@ -165,14 +146,16 @@ class TestPDF(TemplateView):
             template = get_template('PDF/invoice.html')
             # Consumo de API: Tareas
             # Method: GET
-            token = request.COOKIES.get('validate')
+            token = request.COOKIES.get('validatepwa')
+            test = decodered(token)
             headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
             req = requests.get('http://localhost:32482/api/tarea', headers=headers)
             dataAPI = req.json()
             listTarea = dataAPI['data']
             #Variables con data a enviar a la vista
             context = {
-                'tareas': listTarea
+                'tareas': listTarea,
+                'rutUsuarioLogeado': test['nameid']
             }
             # Return Section
             html = template.render(context)

@@ -21,7 +21,7 @@ def decodered(data):
 
 #Función está autenticado
 def authenticated(request):
-    if request.COOKIES.get('validate'):
+    if request.COOKIES.get('validatepwa'):
         return True
     else: 
         return False
@@ -30,7 +30,7 @@ def authenticated(request):
 def setCookie(tokenAPI):
     obj = redirect('DashboardMain')
     # Aquí abajo está creando la cookie => Le asigna el nombre validate
-    obj.set_cookie('validate', tokenAPI, expires=43200)
+    obj.set_cookie('validatepwa', tokenAPI, expires=43200)
     return obj
 
 # Función valida datos => Se pasa al web service para que los valide
@@ -54,9 +54,9 @@ def login(request):
 
 def logout(request):
     if authenticated(request):
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
         rep = redirect('login')
-        rep.delete_cookie('validate') #elimina el valor de la cookie
+        rep.delete_cookie('validatepwa') #elimina el valor de la cookie
         return rep
     else: 
         return redirect('login')

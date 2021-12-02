@@ -9,7 +9,8 @@ import requests, jwt, json
 
 def EmpresaSection(request):
     if(authenticated):
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         req = requests.get('http://localhost:32482/api/business', headers=headers)
         dataAPI = req.json()
@@ -17,7 +18,8 @@ def EmpresaSection(request):
 
         # Variables a enviar a la vista
         context = {
-            'empresa': listEmpresa
+            'empresa': listEmpresa,
+            'rutUsuarioLogeado': test['nameid']
         }
 
         return render(request, 'Empresas/list_empresa.html', {'data': context})
@@ -25,7 +27,8 @@ def EmpresaSection(request):
 def AddEmpresaSection(request):
     if authenticated(request):
         # Consumo de API: Empresa
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         resEmpresa = requests.get('http://localhost:32482/api/business', headers=headers)
         dataEmpresa = resEmpresa.json()
@@ -55,6 +58,7 @@ def AddEmpresaSection(request):
         context = {
             'empresa': listEmpresa,
             'statusCreation': status,
+            'rutUsuarioLogeado': test['nameid']
 
         }
 
@@ -67,7 +71,8 @@ def AddEmpresaSection(request):
 def DeleteEmpresaSection(request, rutEmpresa):
     if authenticated:
         status = 'NO_CONTENT'
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
 
         # Consumo de API: Empresa
@@ -82,7 +87,8 @@ def DeleteEmpresaSection(request, rutEmpresa):
 
         context = {
             'empresa': listEmpresa, 
-            'deleteStatus': status
+            'deleteStatus': status,
+            'rutUsuarioLogeado': test['nameid']
         }
 
         if r.ok:
@@ -103,7 +109,8 @@ def EditEmpresaSection(request, rutEmpresa):
 
         # Configuración Header
         status = 'NO_CONTENT'
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }       
 
         # Consumo de API: OneEmpresa
@@ -139,6 +146,7 @@ def EditEmpresaSection(request, rutEmpresa):
         context = {
             'statusUpdate': status,
             'oneEmpresa': OneEmpresa,
+            'rutUsuarioLogeado': test['nameid']
         }
 
         # Return Section
@@ -154,7 +162,7 @@ def EditEmpresaSection(request, rutEmpresa):
 # METHOD: POST
 def AddEmpresa(request, rut, razonSocial, giro, direccion, numeroTelefono, correoElectronico):
     if authenticated:
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+token, 'Accept': '*/*' }        
 
         # Datos a enviar a la petición PUT
@@ -172,7 +180,7 @@ def AddEmpresa(request, rut, razonSocial, giro, direccion, numeroTelefono, corre
 
 def EditEmpresa(request, rut, razonSocial, giro, direccion, numeroTelefono, correoElectronico, rutEmpresaToSearch):
     if authenticated:
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+token, 'Accept': '*/*' }        
 
         # Datos a enviar a la petición PUT

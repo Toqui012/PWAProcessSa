@@ -15,7 +15,8 @@ from datetime import date
 def AddTareaSection(request):
     if authenticated(request):
 
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         
         #consumo de api : usuarios
@@ -68,7 +69,8 @@ def AddTareaSection(request):
             'user': listUser,
             'prioridad': listPrioridad,
             'estado': listEstado,
-            'justificacion': listJustificacion
+            'justificacion': listJustificacion,
+            'rutUsuarioLogeado': test['nameid'] 
         }
         #Return Section
         return render(request, 'Tareas/add_tarea.html',{'data':context})
@@ -80,7 +82,8 @@ def TareaSection(request):
     if authenticated(request):
         # Consumo de API: Usuario
         # Method: GET
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Content-Type':'application/json', 'Authorization': 'Bearer '+ token}
         req = requests.get('http://localhost:32482/api/tarea', headers=headers)
         dataAPI = req.json()
@@ -108,7 +111,8 @@ def TareaSection(request):
 
         #Variables con data a enviar a la vista
         context = {
-            'tareas': listaFiltrada
+            'tareas': listaFiltrada,
+            'rutUsuarioLogeado': test['nameid']
         }
         # Return Section
         return render(request, 'Tareas/list_tarea.html', {'data': context})
@@ -119,7 +123,8 @@ def TareaSection(request):
 def EditUserSection(request, idTarea):
     if authenticated(request):
         status = 'NO_CONTENT'
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
 
 
@@ -190,6 +195,7 @@ def EditUserSection(request, idTarea):
             'estado':listEstado,
             'justificacion':listJustificacion,
             'oneTarea': OneTarea,
+            'rutUsuarioLogeado': test['nameid']
         }
 
         # return Section
@@ -201,7 +207,8 @@ def EditUserSection(request, idTarea):
 def DeleteTareaSection(request, idTarea):
     if authenticated:
         status = 'NO_CONTENT'
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
+        test = decodered(token)
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
 
 
@@ -215,6 +222,7 @@ def DeleteTareaSection(request, idTarea):
         context = {
             'tareas' : listTarea,
             'deleteStatus' : status,
+            'rutUsuarioLogeado': test['nameid']
         }
 
         if r.ok:
@@ -231,7 +239,7 @@ def DeleteTareaSection(request, idTarea):
 
 def AddTarea(request,nombreTarea,description,dateDeadline,taskPriority):
     if authenticated:
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
 
         dataT = decodered(token)
@@ -254,7 +262,7 @@ def AddTarea(request,nombreTarea,description,dateDeadline,taskPriority):
 def EditTarea(request,nombreTarea,description,dateDeadline,responsible,taskState,taskPriority,tareaToSearch):
 
     if authenticated:
-        token = request.COOKIES.get('validate')
+        token = request.COOKIES.get('validatepwa')
         headers = {'Accept-Encoding': 'UTF-8', 'Content-Type': 'application/json', 'Authorization': 'Bearer '+ token,'Accept': '*/*' }
 
         
